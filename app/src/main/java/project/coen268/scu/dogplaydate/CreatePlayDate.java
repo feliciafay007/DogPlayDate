@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+
 
 public class CreatePlayDate extends ActionBarActivity {
 
@@ -13,6 +16,8 @@ public class CreatePlayDate extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_play_date);
+        Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
+        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
     @Override
