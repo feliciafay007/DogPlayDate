@@ -1,8 +1,5 @@
 package project.coen268.scu.dogplaydate;
 
-/**
- * Created by feliciafay on 5/26/15.
- */
 import android.os.AsyncTask;
 import android.util.Log;
 

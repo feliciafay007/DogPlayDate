@@ -13,20 +13,80 @@
         android:layout_alignParentRight="true"
         android:onClick="onClickSearch"
         android:text="search"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnEndDate"
+        android:text="End:"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/textViewEnd"
+        android:paddingBottom="15dp"
+        android:nestedScrollingEnabled="false"
+        android:minWidth="40dp" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:onClick="onClickEndDate"
-        android:text="end"
+        android:layout_toRightOf="@+id/textViewEnd"
+        android:text="date"
         android:id="@+id/btnEndDate"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btnEndDate"
+        android:text=""
+        android:id="@+id/textViewEndDate"
+        android:minWidth="80dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnEndDate"
+        android:text="Start:"
+        android:id="@+id/textViewStart"
+        android:paddingBottom="15dp"
+        android:minWidth="40dp" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnEndDate"
-        android:text="start"
+        android:layout_toRightOf="@+id/textViewStart"
+        android:text="date"
         android:onClick="onClickStartDate"
         android:id="@+id/btnStartDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_toRightOf="@+id/btnStartDate"
+        android:layout_above="@+id/btnEndDate"
+        android:id="@+id/textViewStartDate"
+        android:minWidth="80dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="time"
+        android:layout_toRightOf="@+id/textViewStartDate"
+        android:layout_above="@+id/btnEndDate"
+        android:onClick="onClickStartDate"
+        android:id="@+id/btnStartTime" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_toRightOf="@+id/btnStartTime"
+        android:layout_above="@+id/btnEndDate"
+        android:id="@+id/textViewStartTime"
+        android:minWidth="80dp" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

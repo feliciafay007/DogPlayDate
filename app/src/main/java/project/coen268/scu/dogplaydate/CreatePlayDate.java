@@ -1,8 +1,6 @@
 package project.coen268.scu.dogplaydate;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
@@ -10,17 +8,20 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import android.app.TimePickerDialog;
+import java.util.Locale;
+
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,20 +36,22 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 // Server Key: AIzaSyDVGQDiBMRR0pXxAOrdWPwHaPiQXJMQc08
 // Browser Key: AIzaSyAHkSb33zot8zfyDca3TmYO09_C1PXlYB8
-public class CreatePlayDate extends FragmentActivity implements OnMapReadyCallback, LocationListener{
+public class CreatePlayDate extends FragmentActivity implements
+        OnMapReadyCallback,
+        LocationListener{
     private  final LatLng LOCATION_UNIV = new LatLng(37.349642, -121.938987);
     private  final LatLng LOCATION_BUILDING = new LatLng(37.348190, -121.937975);
     double latitude = LOCATION_UNIV.latitude;
     double longitude = LOCATION_UNIV.longitude;
     private GoogleMap googleMap;
-    private Button btnStartDate;
-    private final int DATE_DIALOG_ID = 999;
-    private int year;
-    private int month;
-    private int day;
-    private EditText editTextSearchPlace;
     private int PROXIMITY_RADIUS = 2000;
-
+    private Button btnStartDate;
+    private EditText editTextSearchPlace;
+    private DatePickerDialog datePickerDialogStart;
+    private DatePickerDialog datePickerDialogEnd;
+    private TextView textViewStartDate;
+    private TextView textViewEndDate;
+    private SimpleDateFormat simpleDateFormat;
     // NOTE: server key is recommend, though it seems that server key or browser key both work fine.
     private static final String GOOGLE_API_KEY = "AIzaSyDVGQDiBMRR0pXxAOrdWPwHaPiQXJMQc08"; //server key
     //private static final String GOOGLE_API_KEY =  "AIzaSyAHkSb33zot8zfyDca3TmYO09_C1PXlYB8"; // browser key
@@ -57,8 +60,8 @@ public class CreatePlayDate extends FragmentActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_play_date);
-        //Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
-        //ParseInstallation.getCurrentInstallation().saveInBackground();
+        Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         editTextSearchPlace =  (EditText) findViewById(R.id.editTextSearchPlace);
         googleMap = ((MapFragment) getFragmentManager()
@@ -71,7 +74,16 @@ public class CreatePlayDate extends FragmentActivity implements OnMapReadyCallba
 //            onLocationChanged(location);
 //        }
 //        locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
+
+        //--
         onMapReady(googleMap);
+
+        //--
+        prepareDatePickerDialog();
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        textViewStartDate = (TextView) findViewById(R.id.textViewStartDate);
+        textViewEndDate= (TextView) findViewById(R.id.textViewEndDate);
+        prepareDatePickerDialog();
     }
 
     @Override
@@ -82,7 +94,8 @@ public class CreatePlayDate extends FragmentActivity implements OnMapReadyCallba
         map.addMarker(new MarkerOptions()
                 .title("Welcome!")
                 .snippet("Let's play with the dog.")
-                .position(currentLatLng));
+                .position(currentLatLng))
+                .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.dog_icon));
     }
 
 
@@ -126,41 +139,12 @@ public class CreatePlayDate extends FragmentActivity implements OnMapReadyCallba
     }
 
     public void onClickStartDate(View v) {
-        DialogFragment dialogFragment = new StartDatePicker();
-        dialogFragment.show(getFragmentManager(), "start_date_picker");
+        datePickerDialogStart.show();
     }
 
-    //--start
-    Calendar c = Calendar.getInstance();
-//    static int startYear = Calendar.YEAR;
-//    static int startMonth = Calendar.MONTH;
-//    static int startDay = Calendar.DAY_OF_MONTH;
-
-    int startYear = c.get(Calendar.YEAR);
-    int startMonth = c.get(Calendar.MONTH);
-    int startDay = c.get(Calendar.DAY_OF_MONTH);
-
-   // public static class StartDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener{
-   class StartDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener{
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            DatePickerDialog dialog = new DatePickerDialog(CreatePlayDate.this, this, startYear, startMonth, startDay);
-            return dialog;
-
-        }
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            // Do something with the date chosen by the user
-            startYear = year;
-            startMonth = monthOfYear;
-            startDay = dayOfMonth;
-            System.out.println("picked time = " + startYear + "-" + startMonth + "-" + startDay);
-            Log.i("FF", "picked time = " + startYear + "-" + startMonth + "-" + startDay);
-        }
+    public void onClickEndDate(View v) {
+        datePickerDialogEnd.show();
     }
-
-    //---end
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -194,5 +178,31 @@ public class CreatePlayDate extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         // TODO Auto-generated method stub
+    }
+
+//    @Override
+//    public boolean onMarkerClick (Marker marker) {
+//        System.out.println("FF_MARKER" + marker.getTitle() +"," + marker.getSnippet());
+//        Toast.makeText(getApplicationContext(), marker.getTitle() +"," + marker.getSnippet(), Toast.LENGTH_SHORT).show();
+//        return true;
+//    }
+
+    void prepareDatePickerDialog() {
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialogStart = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                textViewStartDate.setText(simpleDateFormat.format(newDate.getTime()));
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialogEnd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                textViewEndDate.setText(simpleDateFormat.format(newDate.getTime()));
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 }

@@ -1,10 +1,6 @@
 package project.coen268.scu.dogplaydate;
 
-/**
- * Created by feliciafay on 5/26/15.
- */
 import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +28,7 @@ public class Http {
             httpData = stringBuffer.toString();
             bufferedReader.close();
         } catch (Exception e) {
-            Log.d("Exception - reading Http url", e.toString());
+            Log.d("Exception:Http url", e.toString());
         } finally {
             inputStream.close();
             httpURLConnection.disconnect();

@@ -1,13 +1,10 @@
 package project.coen268.scu.dogplaydate;
 
-/**
- * Created by feliciafay on 5/26/15.
- */
 import android.os.AsyncTask;
 import android.util.Log;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
@@ -50,6 +47,14 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<S
             markerOptions.position(latLng);
             markerOptions.title(placeName + " : " + vicinity);
             googleMap.addMarker(markerOptions);
+            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    System.out.println("FF_MARKER" + marker.getTitle() +"," + marker.getSnippet());
+                    //Toast.makeText(getApplicationContext(), marker.getTitle() + "," + marker.getSnippet(), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
             System.out.println("listsize" + list.size() + ", " + placeName);
         }
     }
