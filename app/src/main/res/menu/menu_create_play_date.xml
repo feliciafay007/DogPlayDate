@@ -7,4 +7,5 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/send_message" android:title="Send Message"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_search" android:title="@string/action_search"/>
 </menu>

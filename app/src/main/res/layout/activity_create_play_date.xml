@@ -5,7 +5,57 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".CreatePlayDate">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:onClick="onClickSearch"
+        android:text="search"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="onClickEndDate"
+        android:text="end"
+        android:id="@+id/btnEndDate"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnEndDate"
+        android:text="start"
+        android:onClick="onClickStartDate"
+        android:id="@+id/btnStartDate"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Dog Name: "
+        android:layout_above="@+id/btnStartDate"
+        android:id="@+id/editTextDogName" />
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_below="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewChosenPlace"
+        android:layout_marginBottom="@dimen/abc_text_size_body_1_material"
+        class="com.google.android.gms.maps.MapFragment"
+        tools:layout="@layout/abc_search_view" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextSearchPlace"
+        android:hint = "begin search..."
+        android:layout_toLeftOf="@+id/btnSearch"
+        android:layout_alignBottom="@+id/btnSearch"
+        android:layout_alignParentLeft="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:hint="location..."
+        android:id="@+id/textViewChosenPlace"
+        android:layout_above="@+id/editTextDogName" />
 </RelativeLayout>

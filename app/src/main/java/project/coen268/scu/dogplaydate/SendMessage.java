@@ -17,7 +17,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.Random;
-// @Wenyi: this is a demo ,showing how to send messages to parse and receive from it.
+// @Felicia: this is a demo ,showing how to send messages to parse and receive from it.
 
 public class SendMessage extends ActionBarActivity {
     private TextView textView;
