@@ -14,85 +14,37 @@
         android:onClick="onClickSearch"
         android:text="search"/>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="create"
+        android:id="@+id/btnCreateRecord"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingBottom="15dp"
+        android:layout_centerHorizontal="true" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnEndDate"
         android:text="End:"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/textViewEnd"
-        android:paddingBottom="15dp"
-        android:nestedScrollingEnabled="false"
-        android:minWidth="40dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:onClick="onClickEndDate"
-        android:layout_toRightOf="@+id/textViewEnd"
-        android:text="date"
-        android:id="@+id/btnEndDate"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btnEndDate"
-        android:text=""
-        android:id="@+id/textViewEndDate"
-        android:minWidth="80dp" />
+        android:layout_above="@+id/btnCreateRecord"
+        android:minWidth="60dp"
+        android:paddingBottom="5dp"
+        android:id="@+id/textViewEnd"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnEndDate"
         android:text="Start:"
-        android:id="@+id/textViewStart"
-        android:paddingBottom="15dp"
-        android:minWidth="40dp" />
+        android:layout_above="@+id/textViewEnd"
+        android:minWidth="60dp"
+        android:paddingBottom="5dp"
+        android:id="@+id/textViewStart"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnEndDate"
-        android:layout_toRightOf="@+id/textViewStart"
-        android:text="date"
-        android:onClick="onClickStartDate"
-        android:id="@+id/btnStartDate"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_toRightOf="@+id/btnStartDate"
-        android:layout_above="@+id/btnEndDate"
-        android:id="@+id/textViewStartDate"
-        android:minWidth="80dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="time"
-        android:layout_toRightOf="@+id/textViewStartDate"
-        android:layout_above="@+id/btnEndDate"
-        android:onClick="onClickStartDate"
-        android:id="@+id/btnStartTime" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_toRightOf="@+id/btnStartTime"
-        android:layout_above="@+id/btnEndDate"
-        android:id="@+id/textViewStartTime"
-        android:minWidth="80dp" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Dog Name: "
-        android:layout_above="@+id/btnStartDate"
-        android:id="@+id/editTextDogName" />
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
         android:layout_below="@+id/btnSearch"
@@ -115,7 +67,69 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:hint="location..."
-        android:id="@+id/textViewChosenPlace"
-        android:layout_above="@+id/editTextDogName" />
+        android:hint="Location:"
+        android:minWidth="60dp"
+        android:paddingBottom="5dp"
+        android:layout_above="@+id/textViewStart"
+        android:id="@+id/textViewChosenPlace" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="145dp"
+        android:id="@+id/editTextEndDate"
+        android:layout_alignBottom="@+id/textViewEnd"
+        android:layout_toRightOf="@+id/textViewEnd"
+        android:onClick="onClickEndDate"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="145dp"
+        android:id="@+id/editTextStartDate"
+        android:layout_alignBottom="@+id/textViewStart"
+        android:layout_toRightOf="@+id/textViewStart"
+        android:onClick="onClickStartDate"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="3dp"
+        android:freezesText="false"
+        android:textSize="14dp"
+        android:textColor="@android:color/darker_gray" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="145dp"
+        android:layout_alignBottom="@+id/textViewStart"
+        android:layout_toRightOf="@+id/editTextStartDate"
+        android:layout_alignParentRight="true"
+        android:focusableInTouchMode="false"
+        android:id="@+id/editTextStartTime"
+        android:onClick="onClickStartTime"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="3dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="145dp"
+        android:layout_alignBottom="@+id/textViewEnd"
+        android:layout_toRightOf="@+id/editTextEndDate"
+        android:layout_alignParentRight="true"
+        android:focusableInTouchMode="false"
+        android:id="@+id/editTextEndTime"
+        android:onClick="onClickEndTime"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14dp"/>
+
 </RelativeLayout>

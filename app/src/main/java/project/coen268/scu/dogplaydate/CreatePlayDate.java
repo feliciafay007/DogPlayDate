@@ -1,6 +1,7 @@
 package project.coen268.scu.dogplaydate;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
@@ -18,10 +19,12 @@ import com.parse.ParseInstallation;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,8 +52,12 @@ public class CreatePlayDate extends FragmentActivity implements
     private EditText editTextSearchPlace;
     private DatePickerDialog datePickerDialogStart;
     private DatePickerDialog datePickerDialogEnd;
-    private TextView textViewStartDate;
-    private TextView textViewEndDate;
+    private TimePickerDialog timePickerDialogStart;
+    private TimePickerDialog timePickerDialogEnd;
+    private EditText editTextStartDate;
+    private EditText editTextEndDate;
+    private EditText editTextStartTime;
+    private EditText editTextEndTime;
     private SimpleDateFormat simpleDateFormat;
     // NOTE: server key is recommend, though it seems that server key or browser key both work fine.
     private static final String GOOGLE_API_KEY = "AIzaSyDVGQDiBMRR0pXxAOrdWPwHaPiQXJMQc08"; //server key
@@ -79,11 +86,17 @@ public class CreatePlayDate extends FragmentActivity implements
         onMapReady(googleMap);
 
         //--
-        prepareDatePickerDialog();
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        textViewStartDate = (TextView) findViewById(R.id.textViewStartDate);
-        textViewEndDate= (TextView) findViewById(R.id.textViewEndDate);
+//        textViewStartDate = (TextView) findViewById(R.id.textViewStartDate);
+//        textViewEndDate= (TextView) findViewById(R.id.textViewEndDate);
+        editTextStartDate = (EditText) findViewById(R.id.editTextStartDate);
+        editTextEndDate = (EditText) findViewById(R.id.editTextEndDate);
+        editTextStartTime = (EditText) findViewById(R.id.editTextStartTime);
+        editTextEndTime = (EditText) findViewById(R.id.editTextEndTime);
+
+        // in xml file, to hide keyboard,  android:focusableInTouchMode="false"
         prepareDatePickerDialog();
+        prepareTimePickerDialog();
     }
 
     @Override
@@ -146,6 +159,14 @@ public class CreatePlayDate extends FragmentActivity implements
         datePickerDialogEnd.show();
     }
 
+    public void onClickStartTime(View v) {
+        timePickerDialogStart.show();
+    }
+
+    public void onClickEndTime(View v) {
+        timePickerDialogEnd.show();
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -188,12 +209,14 @@ public class CreatePlayDate extends FragmentActivity implements
 //    }
 
     void prepareDatePickerDialog() {
-        Calendar newCalendar = Calendar.getInstance();
+        Calendar newCalendar = Calendar.getInstance(); // use today's date as default
         datePickerDialogStart = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
+                Calendar newDate = Calendar.getInstance(); // set the user's date as the calendar date
                 newDate.set(year, monthOfYear, dayOfMonth);
-                textViewStartDate.setText(simpleDateFormat.format(newDate.getTime()));
+                editTextStartDate.setText(simpleDateFormat.format(newDate.getTime()));
+                // default: at the same day
+                editTextEndDate.setText(simpleDateFormat.format(newDate.getTime()));
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
@@ -201,8 +224,35 @@ public class CreatePlayDate extends FragmentActivity implements
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                textViewEndDate.setText(simpleDateFormat.format(newDate.getTime()));
+                editTextEndDate.setText(simpleDateFormat.format(newDate.getTime()));
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    void prepareTimePickerDialog() {
+        Calendar newCalendar = Calendar.getInstance();
+        timePickerDialogStart = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Calendar newDate = Calendar.getInstance();
+//                newDate.set(hourOfDay,minute);
+/*
+                Date now = new Date(); // java.util.Date, NOT java.sql.Date or java.sql.Timestamp!
+                String format1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(now);
+                String format2 = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(now);
+                String format3 = new SimpleDateFormat("yyyyMMddHHmmss").format(now);
+*/
+                newDate.set(newDate.get(Calendar.YEAR), newDate.get(Calendar.MONTH), newDate.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                editTextStartTime.setText(hourOfDay + " : " + minute);
+            }
+        }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),false );
+
+        timePickerDialogEnd= new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(newDate.get(Calendar.YEAR), newDate.get(Calendar.MONTH), newDate.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                editTextEndTime.setText(hourOfDay + " : " + minute);
+            }
+        }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),false );
+
     }
 }
