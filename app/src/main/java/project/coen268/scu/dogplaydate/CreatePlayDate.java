@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseObject;
 
 // reference
 // http://javapapers.com/android/find-places-nearby-in-google-maps-using-google-places-apiandroid-app/
@@ -48,7 +51,7 @@ public class CreatePlayDate extends FragmentActivity implements
     double longitude = LOCATION_UNIV.longitude;
     private GoogleMap googleMap;
     private int PROXIMITY_RADIUS = 2000;
-    private Button btnStartDate;
+    private Button buttonCreate;
     private EditText editTextSearchPlace;
     private DatePickerDialog datePickerDialogStart;
     private DatePickerDialog datePickerDialogEnd;
@@ -59,6 +62,18 @@ public class CreatePlayDate extends FragmentActivity implements
     private EditText editTextStartTime;
     private EditText editTextEndTime;
     private SimpleDateFormat simpleDateFormat;
+    private Calendar newSetDateStart;
+    private Calendar newSetDateEnd;
+    private String userName;
+    private String userID;
+    private String dogName;
+    private String dogID;
+    private String place;
+    private String status; // 1.created 2.received invitation 3.reject invitation 4.accepted invitation
+    private boolean isValid;
+    private Random rand;
+    private static final String TABLENAME_PLAYDATELIST  = "playDatesListsTable";
+
     // NOTE: server key is recommend, though it seems that server key or browser key both work fine.
     private static final String GOOGLE_API_KEY = "AIzaSyDVGQDiBMRR0pXxAOrdWPwHaPiQXJMQc08"; //server key
     //private static final String GOOGLE_API_KEY =  "AIzaSyAHkSb33zot8zfyDca3TmYO09_C1PXlYB8"; // browser key
@@ -93,10 +108,14 @@ public class CreatePlayDate extends FragmentActivity implements
         editTextEndDate = (EditText) findViewById(R.id.editTextEndDate);
         editTextStartTime = (EditText) findViewById(R.id.editTextStartTime);
         editTextEndTime = (EditText) findViewById(R.id.editTextEndTime);
+        buttonCreate = (Button) findViewById(R.id.btnCreateRecord);
 
         // in xml file, to hide keyboard,  android:focusableInTouchMode="false"
+        newSetDateStart = Calendar.getInstance();
+        newSetDateEnd = Calendar.getInstance();
         prepareDatePickerDialog();
         prepareTimePickerDialog();
+        rand = new Random();
     }
 
     @Override
@@ -212,47 +231,81 @@ public class CreatePlayDate extends FragmentActivity implements
         Calendar newCalendar = Calendar.getInstance(); // use today's date as default
         datePickerDialogStart = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance(); // set the user's date as the calendar date
-                newDate.set(year, monthOfYear, dayOfMonth);
-                editTextStartDate.setText(simpleDateFormat.format(newDate.getTime()));
-                // default: at the same day
-                editTextEndDate.setText(simpleDateFormat.format(newDate.getTime()));
+                SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
+                newSetDateStart.set(year, monthOfYear, dayOfMonth);
+                editTextStartDate.setText(format.format(newSetDateStart.getTime()));
+                // set default for end date as the same with the start date
+                editTextEndDate.setText(format.format(newSetDateStart.getTime()));
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
         datePickerDialogEnd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                editTextEndDate.setText(simpleDateFormat.format(newDate.getTime()));
+                SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
+                newSetDateEnd.set(year, monthOfYear, dayOfMonth);
+                editTextEndDate.setText(format.format(newSetDateEnd.getTime()));
             }
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
     void prepareTimePickerDialog() {
         Calendar newCalendar = Calendar.getInstance();
         timePickerDialogStart = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Calendar newDate = Calendar.getInstance();
-//                newDate.set(hourOfDay,minute);
-/*
-                Date now = new Date(); // java.util.Date, NOT java.sql.Date or java.sql.Timestamp!
-                String format1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(now);
-                String format2 = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(now);
-                String format3 = new SimpleDateFormat("yyyyMMddHHmmss").format(now);
-*/
-                newDate.set(newDate.get(Calendar.YEAR), newDate.get(Calendar.MONTH), newDate.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
-                editTextStartTime.setText(hourOfDay + " : " + minute);
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+                newSetDateStart.set(newSetDateStart.get(Calendar.YEAR), newSetDateStart.get(Calendar.MONTH), newSetDateStart.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                editTextStartTime.setText(format.format(newSetDateStart.getTime()));
+                // set default for end time as 1 hour later than the start time
+                newSetDateEnd.set(newSetDateEnd.get(Calendar.YEAR), newSetDateEnd.get(Calendar.MONTH), newSetDateEnd.get(Calendar.DAY_OF_MONTH), hourOfDay + 1, minute);
+                editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
             }
         }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),false );
 
         timePickerDialogEnd= new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(newDate.get(Calendar.YEAR), newDate.get(Calendar.MONTH), newDate.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
-                editTextEndTime.setText(hourOfDay + " : " + minute);
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+                newSetDateEnd.set(newSetDateEnd.get(Calendar.YEAR), newSetDateEnd.get(Calendar.MONTH), newSetDateEnd.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
             }
         }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),false );
 
+    }
+
+    public void prepareParseSendingData(ParseObject parseObject){
+
+        //userID = new Integer(rand.nextInt(100)).toString();
+        int tempUserID = rand.nextInt(100);
+        userID = Integer.toString(tempUserID);
+        userName = ((tempUserID % 2) == 0 ? "Tracey" : "Maggie Q");
+        Date startTime = newSetDateStart.getTime();
+        Date endTime = newSetDateEnd.getTime();
+        dogName = ((tempUserID % 2) == 0 ? "Jerry" : "Tom");
+        int tempDogID = rand.nextInt(100);
+        dogID = Integer.toString(tempDogID);
+        status = "1";
+        isValid = true;
+        place =((tempDogID % 2) == 0 ? "Mission Park" : "Alumni Park");
+        parseObject.put("userName", userName);
+        parseObject.put("userID", userID);
+        parseObject.put("dogName", dogName);
+        parseObject.put("dogID", dogID);
+        parseObject.put("place", place);
+        parseObject.put("startTime", newSetDateStart.getTime()); // para2: Date
+        parseObject.put("endTime", newSetDateEnd.getTime()); // para2: Date
+        parseObject.put("status", status);
+        parseObject.put("isValid",true );
+    }
+
+    public void onClickCreate (View v) {
+        //1. save on parse
+        //2. show new window of future list and past list
+        //3. UTC time to local time
+        Intent intentViewDatesList = new Intent (CreatePlayDate.this, ViewDatesList.class);
+        startActivity(intentViewDatesList);
+
+        Toast.makeText(this, newSetDateStart.toString() + "\n" + newSetDateEnd.toString(), Toast.LENGTH_SHORT).show();
+        ParseObject playDatesListsTable = new ParseObject(TABLENAME_PLAYDATELIST);
+        prepareParseSendingData(playDatesListsTable );
+        playDatesListsTable.saveInBackground();
     }
 }

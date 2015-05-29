@@ -1,0 +1,14 @@
+.//app/build/generated/source/r/debug/android/support/v7/appcompat/R.java:480:		public static final int search_edit_frame = 0x7f0d005b;
+.//app/build/generated/source/r/debug/project/coen268/scu/dogplaydate/R.java:1999:        public static final int search_edit_frame=0x7f0d005b;
+Binary file .//app/build/intermediates/classes/debug/android/support/v7/appcompat/R$id.class matches
+Binary file .//app/build/intermediates/classes/debug/project/coen268/scu/dogplaydate/R$id.class matches
+Binary file .//app/build/intermediates/dex/debug/classes.dex matches
+.//app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/R.txt:458:int id search_edit_frame 0x7f080046
+.//app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/layout/abc_search_view.xml:48:            android:id="@+id/search_edit_frame"
+.//app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/layout/abc_search_view.xml:93:                  android:dropDownAnchor="@id/search_edit_frame"
+.//app/build/intermediates/res/debug/layout/abc_search_view.xml:48:            android:id="@+id/search_edit_frame"
+.//app/build/intermediates/res/debug/layout/abc_search_view.xml:93:                  android:dropDownAnchor="@id/search_edit_frame"
+Binary file .//app/build/intermediates/resources/resources-debug.ap_ matches
+.//app/build/intermediates/symbols/debug/R.txt:588:int id search_edit_frame 0x7f0d005b
+Binary file .//app/build/outputs/apk/app-debug-unaligned.apk matches
+Binary file .//app/build/outputs/apk/app-debug.apk matches

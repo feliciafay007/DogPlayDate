@@ -23,7 +23,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:paddingBottom="15dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickCreate" />
 
 
     <TextView
@@ -32,8 +33,10 @@
         android:text="End:"
         android:layout_above="@+id/btnCreateRecord"
         android:minWidth="60dp"
-        android:paddingBottom="5dp"
-        android:id="@+id/textViewEnd"/>
+        android:paddingBottom="8dp"
+        android:id="@+id/textViewEnd"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,8 +44,10 @@
         android:text="Start:"
         android:layout_above="@+id/textViewEnd"
         android:minWidth="60dp"
-        android:paddingBottom="5dp"
-        android:id="@+id/textViewStart"/>
+        android:paddingBottom="8dp"
+        android:id="@+id/textViewStart"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="15dp" />
 
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -66,12 +71,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:hint="Location:"
+        android:text="Where:"
         android:minWidth="60dp"
         android:paddingBottom="5dp"
         android:layout_above="@+id/textViewStart"
-        android:id="@+id/textViewChosenPlace" />
+        android:id="@+id/textViewChosenPlace"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="15dp" />
 
     <EditText
         android:layout_width="wrap_content"
