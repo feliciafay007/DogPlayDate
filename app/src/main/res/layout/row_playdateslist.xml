@@ -22,11 +22,23 @@
         android:id="@+id/timeDurationTextView"
         android:layout_gravity="center_vertical"
         android:text="1" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dogImageButton" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/parkImageButton" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14dp"
         android:id="@+id/participantTextView"
         android:layout_gravity="center_vertical"
-        android:text="hello" />
+        android:text="Tom, Jerry" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/invitationStatusImageButton" />
 </LinearLayout>

@@ -32,27 +32,26 @@ public class DatesRecordAdapter extends ArrayAdapter<DatesRecordEntity>{
         TextView startTimeTextView = (TextView) row.findViewById(R.id.startTimeTextView);
         TextView endTimeTextView = (TextView) row.findViewById(R.id.endTimeTextView);
         TextView timeDurationTextView = (TextView) row.findViewById(R.id.timeDurationTextView);
-//        ImageButton dogButton = (ImageButton) row.findViewById(R.id.dogImageButton);
-//        ImageButton parkButton = (ImageButton) row.findViewById(R.id.parkImageButton);
+        ImageButton dogButton = (ImageButton) row.findViewById(R.id.dogImageButton);
+        ImageButton parkButton = (ImageButton) row.findViewById(R.id.parkImageButton);
         TextView participantTextView = (TextView) row.findViewById(R.id.participantTextView);
-//        ImageButton invitationStatusImageButton = (ImageButton) row.findViewById(R.id.invitationStatusImageButton);
+        ImageButton invitationStatusImageButton = (ImageButton) row.findViewById(R.id.invitationStatusImageButton);
 
-//        startTimeTextView.setText(listSource.get(position).getStartTime().toString());
-//        endTimeTextView.setText(listSource.get(position).getEndTime().toString());
-        startTimeTextView.setText("2020");
-        endTimeTextView.setText("2021");
+        startTimeTextView.setText(listSource.get(position).getStartTime().toString().substring(0,5));
+        endTimeTextView.setText(listSource.get(position).getEndTime().toString().substring(0,5));
+//        startTimeTextView.setText("2020");
+//        endTimeTextView.setText("2021");
         long timeDuration = listSource.get(position).getEndTime().getTime() - listSource.get(position).getStartTime().getTime();
         timeDurationTextView.setText(Long.toString(timeDuration));
-        participantTextView.setText(listSource.get(position).getUserName().toString());
+        participantTextView.setText("zizi");
 
         //below: logical test, no busines sense
 //        startTimeTextView.setText("111");
 //        endTimeTextView.setText("222");
 //        timeDurationTextView.setText("333");
-//       dogButton.setImageResource(R.drawable.dog_icon);
-//        parkButton.setImageResource(R.drawable.common_signin_btn_icon_light);
-//        participantTextView.setText("444");
-//        invitationStatusImageButton.setImageResource(R.drawable.abc_btn_radio_material);
+        dogButton.setImageResource(R.drawable.dog_icon);
+        parkButton.setImageResource(R.drawable.common_signin_btn_icon_light);
+        invitationStatusImageButton.setImageResource(R.drawable.abc_btn_radio_material);
         return row;
     }
 }
