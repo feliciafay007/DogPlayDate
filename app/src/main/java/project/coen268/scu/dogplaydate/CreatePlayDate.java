@@ -76,6 +76,7 @@ public class CreatePlayDate extends FragmentActivity implements
     private String status; // 1.created 2.received invitation 3.reject invitation 4.accepted invitation
     private boolean isValid;
     private Random rand;
+    private SimpleDateFormat format;
     private static final String TABLENAME_PLAYDATELIST  = "playDatesListsTable";
 
     // NOTE: server key is recommend, though it seems that server key or browser key both work fine.
@@ -101,24 +102,10 @@ public class CreatePlayDate extends FragmentActivity implements
 //        }
 //        locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
 
-        //--
         onMapReady(googleMap);
 
-        //--
-        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-//        textViewStartDate = (TextView) findViewById(R.id.textViewStartDate);
-//        textViewEndDate= (TextView) findViewById(R.id.textViewEndDate);
-        editTextStartDate = (EditText) findViewById(R.id.editTextStartDate);
-        editTextEndDate = (EditText) findViewById(R.id.editTextEndDate);
-        editTextStartTime = (EditText) findViewById(R.id.editTextStartTime);
-        editTextEndTime = (EditText) findViewById(R.id.editTextEndTime);
-        buttonCreate = (Button) findViewById(R.id.btnCreateRecord);
+        initDefaultDateTime();
 
-        // in xml file, to hide keyboard,  android:focusableInTouchMode="false"
-        newSetDateStart = Calendar.getInstance();
-        newSetDateEnd = Calendar.getInstance();
-        prepareDatePickerDialog();
-        prepareTimePickerDialog();
         rand = new Random();
     }
 
@@ -130,9 +117,10 @@ public class CreatePlayDate extends FragmentActivity implements
         map.addMarker(new MarkerOptions()
                 .title("Welcome!")
                 .snippet("Let's play with the dog.")
-                .position(currentLatLng))
-                .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.dog_icon));
+                .position(currentLatLng));
+                //.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.dog_icon));
     }
+
 
 
     @Override
@@ -227,7 +215,7 @@ public class CreatePlayDate extends FragmentActivity implements
         Calendar newCalendar = Calendar.getInstance(); // use today's date as default
         datePickerDialogStart = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
+                format = new SimpleDateFormat("MMM, dd, yyyy");
                 newSetDateStart.set(year, monthOfYear, dayOfMonth);
                 editTextStartDate.setText(format.format(newSetDateStart.getTime()));
                 // set default for end date as the same with the start date
@@ -237,7 +225,7 @@ public class CreatePlayDate extends FragmentActivity implements
 
         datePickerDialogEnd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                SimpleDateFormat format = new SimpleDateFormat("MMM, dd, yyyy");
+                format = new SimpleDateFormat("MMM, dd, yyyy");
                 newSetDateEnd.set(year, monthOfYear, dayOfMonth);
                 editTextEndDate.setText(format.format(newSetDateEnd.getTime()));
             }
@@ -248,7 +236,7 @@ public class CreatePlayDate extends FragmentActivity implements
         Calendar newCalendar = Calendar.getInstance();
         timePickerDialogStart = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+                format = new SimpleDateFormat("hh:mm a");
                 newSetDateStart.set(newSetDateStart.get(Calendar.YEAR), newSetDateStart.get(Calendar.MONTH), newSetDateStart.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
                 editTextStartTime.setText(format.format(newSetDateStart.getTime()));
                 // set default for end time as 1 hour later than the start time
@@ -259,7 +247,7 @@ public class CreatePlayDate extends FragmentActivity implements
 
         timePickerDialogEnd= new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+                format = new SimpleDateFormat("hh:mm a");
                 newSetDateEnd.set(newSetDateEnd.get(Calendar.YEAR), newSetDateEnd.get(Calendar.MONTH), newSetDateEnd.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
                 editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
             }
@@ -293,15 +281,46 @@ public class CreatePlayDate extends FragmentActivity implements
     }
 
     public void onClickCreate (View v) {
-        //1. save on parse
-        //2. show new window of future list and past list
-        //3. UTC time to local time
+        if ( ! validateStartEndDates() ) {
+            initDefaultDateTime();
+            Toast.makeText(this, "please chooser a valid start and time", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Intent intentViewDatesList = new Intent (CreatePlayDate.this, ViewDatesList.class);
         startActivity(intentViewDatesList);
-
         Toast.makeText(this, newSetDateStart.toString() + "\n" + newSetDateEnd.toString(), Toast.LENGTH_SHORT).show();
         ParseObject playDatesListsTable = new ParseObject(TABLENAME_PLAYDATELIST);
         prepareParseSendingData(playDatesListsTable );
         playDatesListsTable.saveInBackground();
     }
+
+    private boolean validateStartEndDates () {
+        return Calendar.getInstance().before(newSetDateStart) && newSetDateStart.before(newSetDateEnd);
+    }
+
+    private void initDefaultDateTime() {
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        editTextStartDate = (EditText) findViewById(R.id.editTextStartDate);
+        editTextEndDate = (EditText) findViewById(R.id.editTextEndDate);
+        editTextStartTime = (EditText) findViewById(R.id.editTextStartTime);
+        editTextEndTime = (EditText) findViewById(R.id.editTextEndTime);
+        buttonCreate = (Button) findViewById(R.id.btnCreateRecord);
+
+        // in xml file, to hide keyboard,  android:focusableInTouchMode="false"
+        newSetDateStart = Calendar.getInstance();
+        newSetDateEnd = Calendar.getInstance();
+        format = new SimpleDateFormat("MMM, dd, yyyy");
+        editTextStartDate.setText(format.format(newSetDateStart.getTime()));
+        format = new SimpleDateFormat("hh:mm a");
+        editTextStartTime.setText(format.format(newSetDateStart.getTime()));
+        newSetDateEnd.add(Calendar.HOUR, 1);
+        editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
+        format = new SimpleDateFormat("MMM, dd, yyyy");
+        editTextEndDate.setText(format.format(newSetDateEnd.getTime()));
+        prepareDatePickerDialog();
+        prepareTimePickerDialog();
+        return;
+    }
+
 }
