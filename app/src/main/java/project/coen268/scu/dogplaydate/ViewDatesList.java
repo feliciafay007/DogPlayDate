@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
+/**
+ * wenyi
+ */
 public class ViewDatesList extends ActionBarActivity{
     private final List<DatesRecordEntity> currentDatesRecord = new ArrayList();
     //private final List<String> testList = new ArrayList();

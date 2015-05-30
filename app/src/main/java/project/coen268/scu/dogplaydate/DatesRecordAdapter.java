@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * wenyi
+ */
+
 public class DatesRecordAdapter extends ArrayAdapter<DatesRecordEntity>{
 //public class DatesRecordAdapter extends ArrayAdapter<String>{
 

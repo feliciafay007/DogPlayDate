@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    tools:context=".MainActivity"
+    android:background="#F5DAF7"
+    android:padding="60dp">
+
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/loginbg"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_alignParentTop="false"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/bg"
+        android:textSize="18dp"
+        android:background="@drawable/edit_text_border"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="25dp"
+        android:hint="@string/usernameHint"
+        android:inputType="text"
+        android:maxLength="15" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="16dp"
+        android:background="@drawable/edit_text_border"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/etUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:hint="@string/emailHint"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/etEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:hint="@string/passwordHint"
+        android:inputType="textPassword"
+        android:maxLength="10"
+        android:background="@drawable/edit_text_border"
+        />
+
+    <EditText
+        android:id="@+id/etPasswordConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/etPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:hint="@string/confirmPasswordHint"
+        android:inputType="textPassword"
+        android:background="@drawable/edit_text_border"/>
+
+    <Button
+        android:id="@+id/btnCreateAccount"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/etPassword"
+        android:layout_below="@id/etPasswordConfirm"
+        android:layout_marginTop="25dp"
+        android:onClick="signUp"
+        android:layout_centerInParent="true"
+        android:text="@string/createAccount" />
+
+</RelativeLayout>

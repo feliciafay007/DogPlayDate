@@ -8,6 +8,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
+/**
+ * wenyi
+ */
 public class Http {
 
     public String read(String httpUrl) throws IOException {

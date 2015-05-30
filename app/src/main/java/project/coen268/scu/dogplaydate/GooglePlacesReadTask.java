@@ -5,6 +5,10 @@ import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 
+/**
+ * wenyi
+ */
+
 public class GooglePlacesReadTask extends AsyncTask<Object, Integer, String> {
     String googlePlacesData = null;
     GoogleMap googleMap;

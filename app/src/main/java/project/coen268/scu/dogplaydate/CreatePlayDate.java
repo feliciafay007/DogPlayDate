@@ -42,6 +42,10 @@ import com.parse.ParseObject;
 
 // Server Key: AIzaSyDVGQDiBMRR0pXxAOrdWPwHaPiQXJMQc08
 // Browser Key: AIzaSyAHkSb33zot8zfyDca3TmYO09_C1PXlYB8
+
+/**
+ * wenyi
+ */
 public class CreatePlayDate extends FragmentActivity implements
         OnMapReadyCallback,
         LocationListener{
@@ -204,21 +208,13 @@ public class CreatePlayDate extends FragmentActivity implements
         return super.onOptionsItemSelected(item);
     }
     @Override
-    public void onProviderDisabled(String provider) {
-        // TODO Auto-generated method stub
-
-    }
+    public void onProviderDisabled(String provider) {}
 
     @Override
-    public void onProviderEnabled(String provider) {
-        // TODO Auto-generated method stub
-
-    }
+    public void onProviderEnabled(String provider) {}
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO Auto-generated method stub
-    }
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
 
 //    @Override
 //    public boolean onMarkerClick (Marker marker) {

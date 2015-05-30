@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * wenyi
+ */
 public class Places {
 
     public List<HashMap<String, String>> parse(JSONObject jsonObject) {
