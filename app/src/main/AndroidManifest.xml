@@ -58,6 +58,16 @@
     end for google map
     !
     -->
+
+    <!--
+    start from Dai
+    -->
+    <uses-feature android:name="android.hardware.camera"> </uses-feature>
+    <!--
+    end from Dai
+    -->
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -77,7 +87,6 @@
         !
         -->
         <service android:name="com.parse.PushService" />
-
         <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -132,11 +141,6 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ForgetParsePassword"
@@ -150,6 +154,22 @@
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
-    </application>
+        <activity android:name=".DogAlbum"
+                android:label="@string/title_activity_dog_album">
+        </activity>
 
+        <activity android:name=".DogAlbum2"
+            android:label="@string/title_activity_dog_album2">
+        </activity>
+        <activity android:name=".DogProfile"
+                android:label="@string/title_activity_dog_profile">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SingleItemView"
+            android:label="@string/title_activity_single_item_view">
+        </activity>
+    </application>
 </manifest>

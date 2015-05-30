@@ -47,4 +47,16 @@
     <string name="error_field_required">This field is required</string>
     <string name="title_activity_profile">ProfileActivity</string>
 
+
+    <!-- from Dai-->
+    <string name="ranklabel">"Date : "</string>
+    <string name="countrylabel">"Position : "</string>
+    <string name="populationlabel">"Memo : "</string>
+    <string name="title_activity_dog_album">DogAlbum</string>
+    <string name="title_activity_dog_album2">DogAlbum2</string>
+    <string name="title_activity_dog_profile">DogProfile</string>
+    <string name="title_activity_single_list_view">SingleListView</string>
+    <string name="title_activity_single_item_view">SingleItemView</string>
+
+
 </resources>
