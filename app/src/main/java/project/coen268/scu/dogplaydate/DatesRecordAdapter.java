@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -17,43 +19,43 @@ import java.util.List;
  */
 
 public class DatesRecordAdapter extends ArrayAdapter<DatesRecordEntity>{
-//public class DatesRecordAdapter extends ArrayAdapter<String>{
-
     private final List<DatesRecordEntity> listSource;
-    //private final List<String> listSource;
-
-   public DatesRecordAdapter(Context context, int resource, List<DatesRecordEntity> listsrc) {
-   //public DatesRecordAdapter(Context context, int resource, List<String> listsrc) {
+    Calendar row_calendar;
+    SimpleDateFormat simpleDateFormat;
+    public DatesRecordAdapter(Context context, int resource, List<DatesRecordEntity> listsrc) {
         super(context, resource, listsrc);
-        this.listSource = listsrc;
+        listSource = listsrc;
+        row_calendar = Calendar.getInstance();
+        simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy, hh:mm a");
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //todo: 30% done, complete this part
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.row_playdateslist, null);
+        View row = inflater.inflate(R.layout.row_playdateslist, parent,false);
         TextView startTimeTextView = (TextView) row.findViewById(R.id.startTimeTextView);
         TextView endTimeTextView = (TextView) row.findViewById(R.id.endTimeTextView);
         TextView timeDurationTextView = (TextView) row.findViewById(R.id.timeDurationTextView);
+        TextView dogNameTextView = (TextView) row.findViewById(R.id.dogNameTextView);
         ImageButton dogButton = (ImageButton) row.findViewById(R.id.dogImageButton);
         ImageButton parkButton = (ImageButton) row.findViewById(R.id.parkImageButton);
         TextView participantTextView = (TextView) row.findViewById(R.id.participantTextView);
         ImageButton invitationStatusImageButton = (ImageButton) row.findViewById(R.id.invitationStatusImageButton);
 
-        startTimeTextView.setText(listSource.get(position).getStartTime().toString().substring(0,5));
-        endTimeTextView.setText(listSource.get(position).getEndTime().toString().substring(0,5));
-//        startTimeTextView.setText("2020");
-//        endTimeTextView.setText("2021");
+        startTimeTextView.setText(simpleDateFormat .format(listSource.get(position).getStartTime()));
+        //startTimeTextView.setText(listSource.get(position).getStartTime().toString().substring(0,5));
+        endTimeTextView.setText(simpleDateFormat .format(listSource.get(position).getEndTime()));
         long timeDuration = listSource.get(position).getEndTime().getTime() - listSource.get(position).getStartTime().getTime();
+        timeDuration = timeDuration/86400;
         timeDurationTextView.setText(Long.toString(timeDuration));
-        participantTextView.setText("zizi");
-
+        participantTextView.setText("Nobody");
         //below: logical test, no busines sense
 //        startTimeTextView.setText("111");
 //        endTimeTextView.setText("222");
 //        timeDurationTextView.setText("333");
         dogButton.setImageResource(R.drawable.dog_icon);
+        dogNameTextView.setText(listSource.get(position).getDogName());
         parkButton.setImageResource(R.drawable.common_signin_btn_icon_light);
         invitationStatusImageButton.setImageResource(R.drawable.abc_btn_radio_material);
         return row;

@@ -1,44 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:id="@+id/startTimeTextView"
-        android:layout_gravity="center_vertical"
-        android:text="May,31, 2015 01:00 pm" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:id="@+id/endTimeTextView"
-        android:layout_gravity="center_vertical"
-        android:text="May,31, 2015 02:00 pm" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14dp"
-        android:id="@+id/timeDurationTextView"
-        android:layout_gravity="center_vertical"
-        android:text="1" />
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:id="@+id/startTimeTextView"
+            android:layout_gravity="center_vertical"
+            android:text="May,31,2015\n01:00 pm"
+            android:minHeight="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:id="@+id/endTimeTextView"
+            android:layout_gravity="center_vertical"
+            android:text="May,31,2015\n02:00 pm"
+            android:minHeight="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:id="@+id/timeDurationTextView"
+            android:layout_gravity="center_vertical"
+            android:text="hard to bear" />
+
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageButton
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:id="@+id/dogImageButton" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
+            android:id="@+id/dogNameTextView"
+            android:layout_gravity="center_vertical"
+            android:text="1" />
+        </LinearLayout>
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dogImageButton" />
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/parkImageButton" />
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:id="@+id/parkImageButton"
+        android:contentDescription="park image" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14dp"
+        android:textSize="12sp"
         android:id="@+id/participantTextView"
         android:layout_gravity="center_vertical"
         android:text="Tom, Jerry" />
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/invitationStatusImageButton" />
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:id="@+id/invitationStatusImageButton"
+        android:contentDescription="invitation status" />
+
+
 </LinearLayout>

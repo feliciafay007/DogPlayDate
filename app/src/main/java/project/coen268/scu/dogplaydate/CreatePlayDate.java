@@ -65,9 +65,9 @@ public class CreatePlayDate extends FragmentActivity implements
     private EditText editTextEndDate;
     private EditText editTextStartTime;
     private EditText editTextEndTime;
-    private SimpleDateFormat simpleDateFormat;
     private Calendar newSetDateStart;
     private Calendar newSetDateEnd;
+    private Calendar compareDateEnd;
     private String userName;
     private String userID;
     private String dogName;
@@ -211,49 +211,6 @@ public class CreatePlayDate extends FragmentActivity implements
 //        return true;
 //    }
 
-    void prepareDatePickerDialog() {
-        Calendar newCalendar = Calendar.getInstance(); // use today's date as default
-        datePickerDialogStart = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                format = new SimpleDateFormat("MMM, dd, yyyy");
-                newSetDateStart.set(year, monthOfYear, dayOfMonth);
-                editTextStartDate.setText(format.format(newSetDateStart.getTime()));
-                // set default for end date as the same with the start date
-                editTextEndDate.setText(format.format(newSetDateStart.getTime()));
-            }
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
-        datePickerDialogEnd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                format = new SimpleDateFormat("MMM, dd, yyyy");
-                newSetDateEnd.set(year, monthOfYear, dayOfMonth);
-                editTextEndDate.setText(format.format(newSetDateEnd.getTime()));
-            }
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-    }
-
-    void prepareTimePickerDialog() {
-        Calendar newCalendar = Calendar.getInstance();
-        timePickerDialogStart = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                format = new SimpleDateFormat("hh:mm a");
-                newSetDateStart.set(newSetDateStart.get(Calendar.YEAR), newSetDateStart.get(Calendar.MONTH), newSetDateStart.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
-                editTextStartTime.setText(format.format(newSetDateStart.getTime()));
-                // set default for end time as 1 hour later than the start time
-                newSetDateEnd.set(newSetDateEnd.get(Calendar.YEAR), newSetDateEnd.get(Calendar.MONTH), newSetDateEnd.get(Calendar.DAY_OF_MONTH), hourOfDay + 1, minute);
-                editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
-            }
-        }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),false );
-
-        timePickerDialogEnd= new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                format = new SimpleDateFormat("hh:mm a");
-                newSetDateEnd.set(newSetDateEnd.get(Calendar.YEAR), newSetDateEnd.get(Calendar.MONTH), newSetDateEnd.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
-                editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
-            }
-        }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),false );
-
-    }
 
     public void prepareParseSendingData(ParseObject parseObject){
 
@@ -286,21 +243,16 @@ public class CreatePlayDate extends FragmentActivity implements
             Toast.makeText(this, "please chooser a valid start and time", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        Intent intentViewDatesList = new Intent (CreatePlayDate.this, ViewDatesList.class);
-        startActivity(intentViewDatesList);
-        Toast.makeText(this, newSetDateStart.toString() + "\n" + newSetDateEnd.toString(), Toast.LENGTH_SHORT).show();
         ParseObject playDatesListsTable = new ParseObject(TABLENAME_PLAYDATELIST);
         prepareParseSendingData(playDatesListsTable );
         playDatesListsTable.saveInBackground();
+        Intent intentViewDatesList = new Intent (CreatePlayDate.this, ViewDatesList.class);
+        Toast.makeText(this, newSetDateStart.toString() + "\n" + newSetDateEnd.toString(), Toast.LENGTH_SHORT).show();
+        startActivity(intentViewDatesList);//要把startActivity写在onClickCreate的最后一行，否则系统会时不时crash
     }
 
-    private boolean validateStartEndDates () {
-        return Calendar.getInstance().before(newSetDateStart) && newSetDateStart.before(newSetDateEnd);
-    }
 
     private void initDefaultDateTime() {
-        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         editTextStartDate = (EditText) findViewById(R.id.editTextStartDate);
         editTextEndDate = (EditText) findViewById(R.id.editTextEndDate);
         editTextStartTime = (EditText) findViewById(R.id.editTextStartTime);
@@ -308,19 +260,69 @@ public class CreatePlayDate extends FragmentActivity implements
         buttonCreate = (Button) findViewById(R.id.btnCreateRecord);
 
         // in xml file, to hide keyboard,  android:focusableInTouchMode="false"
+        compareDateEnd = Calendar.getInstance();
         newSetDateStart = Calendar.getInstance();
         newSetDateEnd = Calendar.getInstance();
-        format = new SimpleDateFormat("MMM, dd, yyyy");
+        format = new SimpleDateFormat("MMM dd, yyyy");
         editTextStartDate.setText(format.format(newSetDateStart.getTime()));
         format = new SimpleDateFormat("hh:mm a");
         editTextStartTime.setText(format.format(newSetDateStart.getTime()));
         newSetDateEnd.add(Calendar.HOUR, 1);
         editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
-        format = new SimpleDateFormat("MMM, dd, yyyy");
+        format = new SimpleDateFormat("MMM dd, yyyy");
         editTextEndDate.setText(format.format(newSetDateEnd.getTime()));
         prepareDatePickerDialog();
         prepareTimePickerDialog();
         return;
     }
 
+    private boolean validateStartEndDates () {
+        //return (!newSetDateStart.before(Calendar.getInstance())) && newSetDateStart.before(newSetDateEnd);
+        System.out.println(newSetDateStart.toString());
+        System.out.println(compareDateEnd.toString());
+        return !newSetDateStart.before(compareDateEnd);
+    }
+
+    void prepareDatePickerDialog() {
+        Calendar newCalendar = Calendar.getInstance(); // use today's date as default
+        datePickerDialogStart = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                format = new SimpleDateFormat("MMM dd, yyyy");
+                newSetDateStart.set(year, monthOfYear, dayOfMonth);
+                editTextStartDate.setText(format.format(newSetDateStart.getTime()));
+                // set default for end date as the same with the start date
+                editTextEndDate.setText(format.format(newSetDateStart.getTime()));
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialogEnd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                format = new SimpleDateFormat("MMM dd, yyyy");
+                newSetDateEnd.set(year, monthOfYear, dayOfMonth);
+                editTextEndDate.setText(format.format(newSetDateEnd.getTime()));
+            }
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    void prepareTimePickerDialog() {
+        Calendar newCalendar = Calendar.getInstance();
+        timePickerDialogStart = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                format = new SimpleDateFormat("hh:mm a");
+                newSetDateStart.set(newSetDateStart.get(Calendar.YEAR), newSetDateStart.get(Calendar.MONTH), newSetDateStart.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                editTextStartTime.setText(format.format(newSetDateStart.getTime()));
+                // set default for end time as 1 hour later than the start time
+                newSetDateEnd.set(newSetDateEnd.get(Calendar.YEAR), newSetDateEnd.get(Calendar.MONTH), newSetDateEnd.get(Calendar.DAY_OF_MONTH), hourOfDay + 1, minute);
+                editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
+            }
+        }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),false );
+
+        timePickerDialogEnd= new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                format = new SimpleDateFormat("hh:mm a");
+                newSetDateEnd.set(newSetDateEnd.get(Calendar.YEAR), newSetDateEnd.get(Calendar.MONTH), newSetDateEnd.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
+            }
+        }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),false );
+    }
 }

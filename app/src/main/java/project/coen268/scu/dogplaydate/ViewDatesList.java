@@ -15,9 +15,13 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 /**
  * wenyi
@@ -31,6 +35,8 @@ public class ViewDatesList extends ActionBarActivity{
     private String userID = "28";
     ListView currentListsView;
     ListView historyListsView;
+    public SimpleDateFormat inputSimpleFormat;
+    public SimpleDateFormat localSimpleFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +44,11 @@ public class ViewDatesList extends ActionBarActivity{
         setContentView(R.layout.activity_view_dates_list);
         currentListsView = (ListView) findViewById(R.id.currentDatesListView);
         historyListsView = (ListView) findViewById(R.id.pastDatesListView);
+        inputSimpleFormat = new SimpleDateFormat("MMM dd, yyyy, HH:mm");
+        inputSimpleFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        localSimpleFormat= new SimpleDateFormat("MMM dd, yyyy, hh:mm a");
+        localSimpleFormat.setTimeZone(TimeZone.getTimeZone("PST"));
         loadListSource();
-        currentListsView.setAdapter(new DatesRecordAdapter(this, R.layout.row_playdateslist, currentDatesRecord));
         //currentListsView.setAdapter(new DatesRecordAdapter(this, R.layout.row_historical_playdateslist, currentDatesRecord));
 
     }
@@ -68,13 +77,13 @@ public class ViewDatesList extends ActionBarActivity{
 
     public void loadListSource() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(TABLENAME_PLAYDATELIST);
-        query.whereEqualTo("userID", userID);
+        //todo: uncommetn this  line
+        //query.whereEqualTo("userID", userID);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> recordList, ParseException e) {
                 if (e == null) {
                     //Log.d("PLAYDATE", "Retrieved " + recordList.size() + " playdates records");
                     for (ParseObject object : recordList) {
-                        //                        DatesRecordEntity oneRecord = new DatesRecordEntity(
                         DatesRecordEntity oneRecord = new DatesRecordEntity(
                                 object.getDate("startTime"),
                                 object.getDate("endTime"),
@@ -86,6 +95,7 @@ public class ViewDatesList extends ActionBarActivity{
                                 object.getBoolean("isValid"),
                                 object.getInt("status")
                         );
+                        //todo: might want to comment out these two lines
                         System.out.println(oneRecord.toString());
                         //System.out.println("list size " + currentDatesRecord.size());
                         currentDatesRecord.add(oneRecord);
