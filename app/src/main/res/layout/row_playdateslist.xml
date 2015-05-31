@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:focusable="false"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
         android:minHeight="25dp">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:textSize="12dp"
             android:id="@+id/startTimeTextView"
@@ -16,7 +18,7 @@
             android:text="May,31,2015\n01:00 pm"
             android:minHeight="10dp" />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:textSize="12dp"
             android:id="@+id/endTimeTextView"
@@ -24,7 +26,7 @@
             android:text="May,31,2015\n02:00 pm"
             android:minHeight="10dp" />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:textSize="12dp"
             android:id="@+id/timeDurationTextView"
@@ -33,11 +35,11 @@
 
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_width="40dp" android:layout_height="match_parent"
         android:orientation="vertical">
         <ImageButton
-            android:layout_width="34dp"
-            android:layout_height="34dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginBottom="1dp"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
@@ -46,7 +48,7 @@
             android:scaleType="fitCenter"
             android:id="@+id/dogImageButton" />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:textSize="8sp"
             android:id="@+id/dogNameTextView"
@@ -54,8 +56,8 @@
             android:text="1" />
         </LinearLayout>
     <ImageButton
-        android:layout_width="34dp"
-        android:layout_height="34dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
@@ -65,15 +67,14 @@
         android:id="@+id/parkImageButton"
         android:contentDescription="park image" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="35dp"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:id="@+id/participantTextView"
-        android:layout_gravity="center_vertical"
         android:text="Tom, Jerry" />
     <ImageButton
-        android:layout_width="34dp"
-        android:layout_height="34dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,7 +31,7 @@ public class DatesRecordAdapter extends ArrayAdapter<DatesRecordEntity>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, final View convertView, ViewGroup parent) {
         //todo: 30% done, complete this part
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.row_playdateslist, parent,false);
@@ -58,6 +59,19 @@ public class DatesRecordAdapter extends ArrayAdapter<DatesRecordEntity>{
         dogNameTextView.setText(listSource.get(position).getDogName());
         parkButton.setImageResource(R.drawable.common_signin_btn_icon_light);
         invitationStatusImageButton.setImageResource(R.drawable.abc_btn_radio_material);
+        dogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "button clikced", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //todo: any focusable button should be set false, so that the longclick of listview can be triggered.
+        dogButton.setFocusable(false);
+        dogButton.setFocusableInTouchMode(false);
+        parkButton.setFocusable(false);
+        parkButton.setFocusableInTouchMode(false);
+        invitationStatusImageButton.setFocusable(false);
+        invitationStatusImageButton.setFocusableInTouchMode(false);
         return row;
     }
 }

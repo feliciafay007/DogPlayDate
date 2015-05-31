@@ -67,7 +67,7 @@ public class CreatePlayDate extends FragmentActivity implements
     private EditText editTextEndTime;
     private Calendar newSetDateStart;
     private Calendar newSetDateEnd;
-    private Calendar compareDateEnd;
+    private Calendar compareDateBaseline;
     private String userName;
     private String userID;
     private String dogName;
@@ -260,7 +260,7 @@ public class CreatePlayDate extends FragmentActivity implements
         buttonCreate = (Button) findViewById(R.id.btnCreateRecord);
 
         // in xml file, to hide keyboard,  android:focusableInTouchMode="false"
-        compareDateEnd = Calendar.getInstance();
+        compareDateBaseline = Calendar.getInstance();
         newSetDateStart = Calendar.getInstance();
         newSetDateEnd = Calendar.getInstance();
         format = new SimpleDateFormat("MMM dd, yyyy");
@@ -277,10 +277,7 @@ public class CreatePlayDate extends FragmentActivity implements
     }
 
     private boolean validateStartEndDates () {
-        //return (!newSetDateStart.before(Calendar.getInstance())) && newSetDateStart.before(newSetDateEnd);
-        System.out.println(newSetDateStart.toString());
-        System.out.println(compareDateEnd.toString());
-        return !newSetDateStart.before(compareDateEnd);
+        return (!newSetDateStart.before(compareDateBaseline)) && newSetDateStart.before(newSetDateEnd);
     }
 
     void prepareDatePickerDialog() {
