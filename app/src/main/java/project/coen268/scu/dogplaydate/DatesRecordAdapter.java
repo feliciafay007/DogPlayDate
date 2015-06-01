@@ -20,6 +20,7 @@ import java.util.List;
  */
 
 public class DatesRecordAdapter extends ArrayAdapter<DatesRecordEntity>{
+    private static final long TIME_INTERVAL=3600000;
     private final List<DatesRecordEntity> listSource;
     Calendar row_calendar;
     SimpleDateFormat simpleDateFormat;
@@ -48,7 +49,7 @@ public class DatesRecordAdapter extends ArrayAdapter<DatesRecordEntity>{
         //startTimeTextView.setText(listSource.get(position).getStartTime().toString().substring(0,5));
         endTimeTextView.setText(simpleDateFormat .format(listSource.get(position).getEndTime()));
         long timeDuration = listSource.get(position).getEndTime().getTime() - listSource.get(position).getStartTime().getTime();
-        timeDuration = timeDuration/86400;
+        timeDuration = timeDuration/TIME_INTERVAL;
         timeDurationTextView.setText(Long.toString(timeDuration));
         participantTextView.setText("Nobody");
         //below: logical test, no busines sense

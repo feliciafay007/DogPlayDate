@@ -277,6 +277,9 @@ public class CreatePlayDate extends FragmentActivity implements
     }
 
     private boolean validateStartEndDates () {
+        System.out.println(newSetDateStart.toString());
+        System.out.println(compareDateBaseline.toString());
+        System.out.println(newSetDateEnd.toString());
         return (!newSetDateStart.before(compareDateBaseline)) && newSetDateStart.before(newSetDateEnd);
     }
 
@@ -288,7 +291,8 @@ public class CreatePlayDate extends FragmentActivity implements
                 newSetDateStart.set(year, monthOfYear, dayOfMonth);
                 editTextStartDate.setText(format.format(newSetDateStart.getTime()));
                 // set default for end date as the same with the start date
-                editTextEndDate.setText(format.format(newSetDateStart.getTime()));
+                newSetDateEnd.set(year, monthOfYear, dayOfMonth);
+                editTextEndDate.setText(format.format(newSetDateEnd.getTime()));
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 

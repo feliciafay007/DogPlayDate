@@ -24,6 +24,7 @@ public class DatesRecordEntity implements Serializable{
     private String dogName;
     private String dogID;
     private String place;
+    private String objectID;
     private boolean isValid;
     private int status;
 
@@ -32,7 +33,7 @@ public class DatesRecordEntity implements Serializable{
         super();
     }
 
-    public DatesRecordEntity(Date d1, Date d2, String u1, String id1, String u2, String id2, String p, boolean v, int s) {
+    public DatesRecordEntity(Date d1, Date d2, String u1, String id1, String u2, String id2, String p, String o, boolean v, int s) {
   // public DatesRecordEntity(String u1, String id1, String u2, String id2, String p, boolean v, int s) {
         super();
         startTime = d1;
@@ -42,6 +43,7 @@ public class DatesRecordEntity implements Serializable{
         dogName = u2;
         dogID = id2;
         place = p;
+        objectID = o;
         isValid = v;
         status = s;
     }
@@ -116,6 +118,14 @@ public class DatesRecordEntity implements Serializable{
         status = s;
     }
 
+    public String getObjectID() {
+        return objectID;
+    }
+
+    public void setObjectID(String s) {
+        objectID = s;
+    }
+
     public String toString() {
         return  "0 " + startTime.toString() + "\n" +
                 "1 " + endTime.toString() + "\n" +
@@ -125,6 +135,7 @@ public class DatesRecordEntity implements Serializable{
                 "5 " + dogID  + "\n" +
                 "6 " + place+ "\n" +
                 "7 " + isValid + "\n" +
-                "8 " + status+ "\n";
+                "8 " + status+ "\n" +
+                "9 " + objectID + "\n";
     }
  }

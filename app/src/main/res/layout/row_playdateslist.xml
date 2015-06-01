@@ -3,7 +3,8 @@
     android:focusable="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/row_playdate_linearlayout">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="90dp"
@@ -30,8 +31,7 @@
             android:layout_height="wrap_content"
             android:textSize="12dp"
             android:id="@+id/timeDurationTextView"
-            android:layout_gravity="center_vertical"
-            android:text="hard to bear" />
+            android:layout_gravity="center_vertical" />
 
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -50,10 +50,15 @@
         <TextView
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:textSize="8sp"
+            android:textSize="10sp"
             android:id="@+id/dogNameTextView"
-            android:layout_gravity="center_vertical"
-            android:text="1" />
+            android:layout_gravity="center"
+            android:text="1"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:gravity="center_vertical|center_horizontal" />
         </LinearLayout>
     <ImageButton
         android:layout_width="35dp"
@@ -67,11 +72,13 @@
         android:id="@+id/parkImageButton"
         android:contentDescription="park image" />
     <TextView
-        android:layout_width="35dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:id="@+id/participantTextView"
-        android:text="Tom, Jerry" />
+        android:text="Tom, Jerry"
+        android:layout_gravity="center"
+        android:gravity="center_vertical|center_horizontal" />
     <ImageButton
         android:layout_width="35dp"
         android:layout_height="35dp"

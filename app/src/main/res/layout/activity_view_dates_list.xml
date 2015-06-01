@@ -10,11 +10,14 @@
     <TextView android:text="Current Record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/currentDatesTextView" />
+        android:id="@+id/currentDatesTextView"
+        android:layout_margin="5dp"
+        android:textStyle="bold|italic"
+        android:textSize="15dp" />
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
         android:id="@+id/currentDatesListView"
         android:scrollbars="vertical|horizontal"
         android:paddingBottom="2dp" />
@@ -24,11 +27,14 @@
         android:layout_height="wrap_content"
         android:text="History Record  "
         android:id="@+id/pastDatesTextView"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:layout_margin="5dp"
+        android:textStyle="bold|italic"
+        android:textSize="15dp" />
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="220dp"
         android:id="@+id/pastDatesListView" />
 
 </LinearLayout>
