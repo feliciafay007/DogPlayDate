@@ -2,6 +2,8 @@ package project.coen268.scu.dogplaydate;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -45,18 +47,19 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<S
             String vicinity = googlePlace.get("vicinity");
             LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
-            markerOptions.title(placeName + " : " + vicinity);
-            googleMap.addMarker(markerOptions);
-            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    System.out.println("FF_MARKER" + marker.getTitle() +"," + marker.getSnippet());
-                    //Toast.makeText(getApplicationContext(), marker.getTitle() + "," + marker.getSnippet(), Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
-            System.out.println("listsize" + list.size() + ", " + placeName);
+            markerOptions.title(placeName + ", in " + vicinity);
+            //markerOptions.snippet("Let's play at " + placeName + " : " + vicinity);
+            Marker locationMarker = googleMap.addMarker(markerOptions);
+//            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                @Override
+//                public boolean onMarkerClick(Marker marker) {
+//                    System.out.println("FF_MARKER : " + marker.getTitle() + "," + marker.getSnippet());
+//                    return true;
+//                }
+//            });
+//            System.out.println("listsize" + list.size() + ", " + placeName);
         }
     }
+
 }
 

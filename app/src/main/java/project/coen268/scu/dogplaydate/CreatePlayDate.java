@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
@@ -78,6 +79,8 @@ public class CreatePlayDate extends FragmentActivity implements
     private Random rand;
     private SimpleDateFormat format;
     private static final String TABLENAME_PLAYDATELIST  = "playDatesListsTable";
+    private TextView textViewChosenPlace;
+    private LatLng latLng;
 
     // NOTE: server key is recommend, though it seems that server key or browser key both work fine.
     private static final String GOOGLE_API_KEY = "AIzaSyDVGQDiBMRR0pXxAOrdWPwHaPiQXJMQc08"; //server key
@@ -91,6 +94,7 @@ public class CreatePlayDate extends FragmentActivity implements
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
         editTextSearchPlace =  (EditText) findViewById(R.id.editTextSearchPlace);
+        textViewChosenPlace = (TextView) findViewById(R.id.textViewChosenPlace);
         googleMap = ((MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map)).getMap();
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -107,6 +111,17 @@ public class CreatePlayDate extends FragmentActivity implements
         initDefaultDateTime();
 
         rand = new Random();
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.showInfoWindow();
+                latLng = marker.getPosition();
+                textViewChosenPlace.setText("Loc: "  + marker.getTitle() + latLng.toString());
+                System.out.println("FF_MARKER_2 : " + marker.getTitle() + "," + marker.getSnippet() + marker.getPosition().toString());
+                return true;
+            }
+        });
     }
 
     @Override
@@ -160,6 +175,7 @@ public class CreatePlayDate extends FragmentActivity implements
         toPass[0] = googleMap;
         toPass[1] = googlePlacesUrl.toString();
         googlePlacesReadTask.execute(toPass);
+        //
     }
 
     public void onClickStartDate(View v) {

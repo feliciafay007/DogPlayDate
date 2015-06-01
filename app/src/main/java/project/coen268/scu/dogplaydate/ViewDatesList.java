@@ -164,36 +164,8 @@ public class ViewDatesList extends Activity{
         deleteDialogBuilder.
                 setMessage("Do you really want to delete this?\n" + recordList.get((int) listViewItemId).toString()).
                 setTitle("Note");
-        deleteDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            //todo: currentSparseArray, hisotrySparseArray
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "this is to be deleted: \n" + recordList.get((int) listViewItemId).toString(), Toast.LENGTH_SHORT).show();
-                ParseQuery<ParseObject> query = ParseQuery.getQuery(TABLENAME_PLAYDATELIST);
-                query.whereEqualTo("objectId", sparseArray.get((int) listViewItemId).getObjectID());
-                //System.out.println("objectId" + currentSparseArray.get((int) listViewItemId).getObjectID());
-                query.findInBackground(new FindCallback<ParseObject>() {
-                    public void done(List<ParseObject> objectList, ParseException e) {
-                        if (e == null) {
-                            for (ParseObject myObject : objectList) {
-                                myObject.deleteInBackground(new DeleteCallback() {
-                                    public void done(ParseException e) {
-                                        if (e == null) {
-                                            loadListSource();
-                                        } else {
-                                            Log.d("FF", "Delete Error1: " + e.getMessage());
-                                        }
-                                    }
-                                });
-                            }
-                        } else {
-                            Log.d("FF", "Delete Error2: " + e.getMessage());
-                            return;
-                        }
-                    }
-                });
-            }
-        });
+
+
         deleteDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
