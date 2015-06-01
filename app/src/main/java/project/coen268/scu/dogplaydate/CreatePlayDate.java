@@ -90,7 +90,7 @@ public class CreatePlayDate extends FragmentActivity implements
     private LatLng latLng;
     private HashMap<String, Marker> markerHashMap;
     //private ArrayList<Marker> markerArrayList;
-    public List<HashMap<String, String>> listHashMap;
+    //public List<HashMap<String, String>> listHashMap;
 
     // NOTE: server key is recommend, though it seems that server key or browser key both work fine.
     private static final String GOOGLE_API_KEY = "AIzaSyDVGQDiBMRR0pXxAOrdWPwHaPiQXJMQc08"; //server key
@@ -178,8 +178,7 @@ public class CreatePlayDate extends FragmentActivity implements
         //test
         //Iterator it = markerHashMap.entrySet().iterator();
         for (HashMap.Entry<String, Marker> entry : markerHashMap.entrySet()) {
-            Log.i("FFFF", entry.getValue().getTitle());
-            Log.i("FFFF", entry.getKey());
+            System.out.println("mhashMapFFFF" + entry.getValue().getTitle());
         }
 //        for (int i = 0; i < markerArrayList.size(); ++i) {
 //            Log.i("FFFF", markerArrayList.get(i));
@@ -209,12 +208,18 @@ public class CreatePlayDate extends FragmentActivity implements
         Object[] toPass = new Object[3];
         toPass[0] = googleMap;
         toPass[1] = googlePlacesUrl.toString();
-        //toPass[2] = hashMapForMarker;
+        markerHashMap = new HashMap<String, Marker>();
+        toPass[2] = markerHashMap;
         //googlePlacesReadTask.execute(toPass);
-        Object[] toRecieve = new Object[1];
-        toRecieve[0] = listHashMap;
+        //Object toReceive = new Object();
+        //toRecieve[0] = listHashMap;
         //Integer i = new Integer(1);
+        //HashMap<String, Marker> markerHashMap;
+        //toRecieve[0]= markerHashMap;
         googlePlacesReadTask.execute(toPass);
+        //googlePlacesReadTask.execute(toPass, null, null);  //这是错误的！！！
+        //markerHashMap = (HashMap<String, Marker>) toReceive;
+
     }
 
 

@@ -16,33 +16,44 @@ import java.util.List;
 
 //public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<String, String>>> {
 public class PlacesDisplayTask extends AsyncTask<Object, Integer, Void> {
-
+//public class PlacesDisplayTask extends AsyncTask<Object, Integer, HashMap<String, Marker> > {
     JSONObject googlePlacesJson;
     GoogleMap googleMap;
     //Felicia
     //HashMap<String, Marker> markerHashMap;
     List<HashMap<String, String>> googlePlacesList = null;
+    HashMap<String, Marker> markerMap2 = null;
 
     @Override
    // protected List<HashMap<String, String>> doInBackground(Object... inputObj) {
     protected Void doInBackground(Object... inputObj) {
+  // protected HashMap<String, Marker> doInBackground(Object... inputObj) {
 
         //List<HashMap<String, String>> googlePlacesList = null;
+        //HashMap<String, Marker> markerHashMap = new HashMap<>();
+        //HashMap<String, Marker> markerHashMap;
         Places placeJsonParser = new Places();
         try {
             googleMap = (GoogleMap) inputObj[0];
             googlePlacesJson = new JSONObject((String) inputObj[1]);
             googlePlacesList = placeJsonParser.parse(googlePlacesJson);
+            //markerMap2 = (HashMap<String, Marker>) inputObj[2];
+            markerMap2 = new HashMap<String, Marker>();
+            //return markerHashMap;
         } catch (Exception e) {
             Log.d("Exception", e.toString());
         }
         //return googlePlacesList;
         return null;
+        //return markerHashMap;
     }
 
     @Override
    // protected void onPostExecute(List<HashMap<String, String>> list) {
     protected void onPostExecute(Void v) {
+   // protected void onPostExecute(HashMap<String, Marker> mhashMap) {
+
+        //Felicia
         List<HashMap<String, String>> list = googlePlacesList;
         googleMap.clear();
         for (int i = 0; i < list.size(); i++) {
@@ -59,8 +70,9 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, Void> {
             //markerOptions.snippet("Let's play at " + placeName + " : " + vicinity);
             Marker locationMarker = googleMap.addMarker(markerOptions);
             //@Felicia
-            //            System.out.println("listsize" + list.size() + ", " + placeName);
-            //markerHashMap.put(latLng.toString(), locationMarker);
+            //System.out.println("listsize" + list.size() + ", " + placeName);
+            markerMap2.put(latLng.toString(), locationMarker);
+            System.out.println("mhashMap" + markerMap2.size() + ", " + placeName);
         }
     }
 
