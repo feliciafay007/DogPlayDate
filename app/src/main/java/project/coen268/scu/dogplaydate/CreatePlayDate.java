@@ -19,9 +19,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -75,12 +80,17 @@ public class CreatePlayDate extends FragmentActivity implements
     private String dogID;
     private String place;
     private String status; // 1.created 2.received invitation 3.reject invitation 4.accepted invitation
+    private String pointLat;
+    private String pointLng;
     private boolean isValid;
     private Random rand;
     private SimpleDateFormat format;
     private static final String TABLENAME_PLAYDATELIST  = "playDatesListsTable";
     private TextView textViewChosenPlace;
     private LatLng latLng;
+    private HashMap<String, Marker> markerHashMap;
+    //private ArrayList<Marker> markerArrayList;
+    public List<HashMap<String, String>> listHashMap;
 
     // NOTE: server key is recommend, though it seems that server key or browser key both work fine.
     private static final String GOOGLE_API_KEY = "AIzaSyDVGQDiBMRR0pXxAOrdWPwHaPiQXJMQc08"; //server key
@@ -117,11 +127,15 @@ public class CreatePlayDate extends FragmentActivity implements
             public boolean onMarkerClick(Marker marker) {
                 marker.showInfoWindow();
                 latLng = marker.getPosition();
-                textViewChosenPlace.setText("Loc: "  + marker.getTitle() + latLng.toString());
+                place = marker.getTitle();
+                pointLat = Double.toString(latLng.latitude);
+                pointLng = Double.toString(latLng.longitude);
+                textViewChosenPlace.setText("Loc: "  + place + "," + latLng.toString());
                 System.out.println("FF_MARKER_2 : " + marker.getTitle() + "," + marker.getSnippet() + marker.getPosition().toString());
                 return true;
             }
         });
+
     }
 
     @Override
@@ -156,7 +170,25 @@ public class CreatePlayDate extends FragmentActivity implements
 
 
     public void onClickSearch(View v) {
+        markerHashMap = new HashMap<String, Marker>();
+        //markerArrayList = new ArrayList<Marker> ();
 
+        searchNearbyParks(v, markerHashMap);
+        searchEventedParks(v);
+        //test
+        //Iterator it = markerHashMap.entrySet().iterator();
+        for (HashMap.Entry<String, Marker> entry : markerHashMap.entrySet()) {
+            Log.i("FFFF", entry.getValue().getTitle());
+            Log.i("FFFF", entry.getKey());
+        }
+//        for (int i = 0; i < markerArrayList.size(); ++i) {
+//            Log.i("FFFF", markerArrayList.get(i));
+//        }
+
+    }
+
+
+    public void searchNearbyParks(View v, HashMap<String, Marker> markerArrList) {
         // NOTE: the TYPE keyword should be lower case letters
         String type = editTextSearchPlace.getText().toString().toLowerCase();
         if (type == null || type.isEmpty()) {
@@ -171,11 +203,23 @@ public class CreatePlayDate extends FragmentActivity implements
         Toast.makeText(getApplicationContext(), googlePlacesUrl.toString(), Toast.LENGTH_SHORT).show();
         System.out.println(googlePlacesUrl.toString());
         GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask();
-        Object[] toPass = new Object[2];
+//        Object[] toPass = new Object[2];
+//        toPass[0] = googleMap;
+//        toPass[1] = googlePlacesUrl.toString();
+        Object[] toPass = new Object[3];
         toPass[0] = googleMap;
         toPass[1] = googlePlacesUrl.toString();
+        //toPass[2] = hashMapForMarker;
+        //googlePlacesReadTask.execute(toPass);
+        Object[] toRecieve = new Object[1];
+        toRecieve[0] = listHashMap;
+        //Integer i = new Integer(1);
         googlePlacesReadTask.execute(toPass);
-        //
+    }
+
+
+    public void searchEventedParks(View v) {
+        return;
     }
 
     public void onClickStartDate(View v) {
@@ -239,9 +283,9 @@ public class CreatePlayDate extends FragmentActivity implements
         dogName = ((tempUserID % 2) == 0 ? "Jerry" : "Tom");
         int tempDogID = rand.nextInt(100);
         dogID = Integer.toString(tempDogID);
-        status = "1";
+        status = "0";
         isValid = true;
-        place =((tempDogID % 2) == 0 ? "Mission Park" : "Alumni Park");
+        //place =((tempDogID % 2) == 0 ? "Mission Park" : "Alumni Park");
         parseObject.put("userName", userName);
         parseObject.put("userID", userID);
         parseObject.put("dogName", dogName);
@@ -251,6 +295,8 @@ public class CreatePlayDate extends FragmentActivity implements
         parseObject.put("endTime", newSetDateEnd.getTime()); // para2: Date
         parseObject.put("status", status);
         parseObject.put("isValid",true );
+        parseObject.put("pointLat", pointLat);
+        parseObject.put("pointLng",pointLng);
     }
 
     public void onClickCreate (View v) {

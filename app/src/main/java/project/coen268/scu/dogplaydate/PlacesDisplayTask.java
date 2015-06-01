@@ -14,17 +14,21 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 
-public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<String, String>>> {
+//public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<String, String>>> {
+public class PlacesDisplayTask extends AsyncTask<Object, Integer, Void> {
 
     JSONObject googlePlacesJson;
     GoogleMap googleMap;
+    //Felicia
+    //HashMap<String, Marker> markerHashMap;
+    List<HashMap<String, String>> googlePlacesList = null;
 
     @Override
-    protected List<HashMap<String, String>> doInBackground(Object... inputObj) {
+   // protected List<HashMap<String, String>> doInBackground(Object... inputObj) {
+    protected Void doInBackground(Object... inputObj) {
 
-        List<HashMap<String, String>> googlePlacesList = null;
+        //List<HashMap<String, String>> googlePlacesList = null;
         Places placeJsonParser = new Places();
-
         try {
             googleMap = (GoogleMap) inputObj[0];
             googlePlacesJson = new JSONObject((String) inputObj[1]);
@@ -32,11 +36,14 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<S
         } catch (Exception e) {
             Log.d("Exception", e.toString());
         }
-        return googlePlacesList;
+        //return googlePlacesList;
+        return null;
     }
 
     @Override
-    protected void onPostExecute(List<HashMap<String, String>> list) {
+   // protected void onPostExecute(List<HashMap<String, String>> list) {
+    protected void onPostExecute(Void v) {
+        List<HashMap<String, String>> list = googlePlacesList;
         googleMap.clear();
         for (int i = 0; i < list.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -47,17 +54,13 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<S
             String vicinity = googlePlace.get("vicinity");
             LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
-            markerOptions.title(placeName + ", in " + vicinity);
+            markerOptions.title(placeName);
+            //markerOptions.title(placeName + "," + vicinity);
             //markerOptions.snippet("Let's play at " + placeName + " : " + vicinity);
             Marker locationMarker = googleMap.addMarker(markerOptions);
-//            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//                @Override
-//                public boolean onMarkerClick(Marker marker) {
-//                    System.out.println("FF_MARKER : " + marker.getTitle() + "," + marker.getSnippet());
-//                    return true;
-//                }
-//            });
-//            System.out.println("listsize" + list.size() + ", " + placeName);
+            //@Felicia
+            //            System.out.println("listsize" + list.size() + ", " + placeName);
+            //markerHashMap.put(latLng.toString(), locationMarker);
         }
     }
 
