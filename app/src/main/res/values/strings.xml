@@ -34,7 +34,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in_register"><b>Sign in</b> or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="action_register">Create Account</string>
+    <string name="action_register">Register</string>
     <string name="menu_forgot_password">Recover lost password</string>
     <string name="login_progress_signing_in">Signing in&#8230;</string>
     <string name="login_progress_password_email">Sending email&#8230;</string>
@@ -57,6 +57,10 @@
     <string name="title_activity_dog_profile">DogProfile</string>
     <string name="title_activity_single_list_view">SingleListView</string>
     <string name="title_activity_single_item_view">SingleItemView</string>
+    <string name="title_activity_route">Route</string>
+    <string name="title_activity_add_friend">AddFriend</string>
+    <string name="title_activity_add_friends">AddFriends</string>
+    <string name="title_activity_find_freinds">FindFreinds</string>
 
 
 </resources>

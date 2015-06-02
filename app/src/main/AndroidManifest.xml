@@ -59,15 +59,18 @@
     !
     -->
 
-    <!--
-    start from Dai
-    -->
-    <uses-feature android:name="android.hardware.camera"> </uses-feature>
-    <!--
-    end from Dai
-    -->
 
+    <!-- start from Lydia -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- end for Lydia -->
 
+    <!-- start from Dai -->
+    <uses-feature android:name="android.hardware.camera" >
+    </uses-feature>
+
+    <!-- end from Dai -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -76,10 +79,6 @@
         <activity
             android:name=".CreatePlayDate"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SendMessage"
@@ -91,6 +90,7 @@
         !
         -->
         <service android:name="com.parse.PushService" />
+
         <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -145,6 +145,10 @@
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ForgetParsePassword"
@@ -158,18 +162,34 @@
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
-        <activity android:name=".DogAlbum"
-                android:label="@string/title_activity_dog_album">
+        <activity
+            android:name=".DogAlbum"
+            android:label="@string/title_activity_dog_album" >
         </activity>
-
-        <activity android:name=".DogAlbum2"
-            android:label="@string/title_activity_dog_album2">
+        <activity
+            android:name=".DogAlbum2"
+            android:label="@string/title_activity_dog_album2" >
         </activity>
-        <activity android:name=".DogProfile"
-                android:label="@string/title_activity_dog_profile">
+        <activity
+            android:name=".DogProfile"
+            android:label="@string/title_activity_dog_profile" >
         </activity>
-        <activity android:name=".SingleItemView"
-            android:label="@string/title_activity_single_item_view">
+        <activity
+            android:name=".SingleItemView"
+            android:label="@string/title_activity_single_item_view" >
+        </activity>
+        <activity
+            android:name=".Route"
+            android:label="@string/title_activity_route" >
+        </activity>
+        <activity
+            android:name=".AddFriends"
+            android:label="@string/title_activity_add_friends" >
+        </activity>
+        <activity
+            android:name=".FindFreinds"
+            android:label="@string/title_activity_find_freinds" >
         </activity>
     </application>
+
 </manifest>

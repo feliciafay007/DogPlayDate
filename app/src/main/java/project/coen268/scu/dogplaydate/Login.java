@@ -1,11 +1,11 @@
 package project.coen268.scu.dogplaydate;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 import java.util.Locale;
@@ -32,6 +34,9 @@ public class Login extends Activity {
     Button btn_LoginIn = null;
     Button btn_SignUp = null;
     Button btn_ForgetPass = null;
+    Button btn_cancel = null;
+    ImageButton btn_fb = null;
+    ImageButton btn_twitter = null;
     private EditText mUserNameEditText;
     private EditText mPasswordEditText;
 
@@ -47,7 +52,7 @@ public class Login extends Activity {
         setContentView(R.layout.activity_login);
 
         Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
-        //ParseInstallation.getCurrentInstallation().saveInBackground();
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         // creating connection detector class instance
         cd = new ConnectionDetector(getApplicationContext());
@@ -55,8 +60,12 @@ public class Login extends Activity {
         btn_LoginIn = (Button) findViewById(R.id.btn_login);
         btn_SignUp = (Button) findViewById(R.id.btn_signup);
         btn_ForgetPass = (Button) findViewById(R.id.btn_ForgetPass);
+        btn_cancel = (Button) findViewById(R.id.btn_cancel);
         mUserNameEditText = (EditText) findViewById(R.id.username);
         mPasswordEditText = (EditText) findViewById(R.id.password);
+        btn_fb= (ImageButton) findViewById(R.id.btn_fb);
+        btn_twitter = (ImageButton) findViewById(R.id.btn_twitter);
+
 
 
         btn_LoginIn.setOnClickListener(new OnClickListener() {
@@ -76,10 +85,6 @@ public class Login extends Activity {
                     showAlertDialog(Login.this, "No Internet Connection",
                             "You don't have internet connection.", false);
                 }
-
-                Intent intent = new Intent(Login.this, ProfileActivity.class);
-                startActivity(intent);
-
             }
 
         });
@@ -94,7 +99,6 @@ public class Login extends Activity {
         });
 
         btn_ForgetPass.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent in =  new Intent(Login.this,ForgetParsePassword.class);
@@ -102,14 +106,36 @@ public class Login extends Activity {
             }
         });
 
+        btn_cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, Login.class);
+                startActivity(intent);
 
+            }
+        });
+
+        btn_fb.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewIntent =
+                        new Intent("android.intent.action.VIEW",
+                                Uri.parse("http://www.facebook.com/"));
+                startActivity(viewIntent);
+            }
+        });
+
+        btn_twitter.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewIntent =
+                        new Intent("android.intent.action.VIEW",
+                                Uri.parse("https://twitter.com/"));
+                startActivity(viewIntent);
+            }
+        });
 
     }
-
-    public void onCreateParse() {
-        Parse.initialize(this, "Your App ID", "Your Client ID");
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,7 +148,7 @@ public class Login extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.menu.menu_forget_parse_password:
+            case R.id.menu_forgot_password:
                 forgotPassword();
                 return true;
             default:
@@ -191,8 +217,10 @@ public class Login extends Activity {
     }
 
     protected void loginSuccessful() {
-        Intent in =  new Intent(Login.this, ProfileActivity.class);
-        startActivity(in);
+        Intent intent = new Intent(Login.this, ProfileActivity.class);
+//                    intent.putExtra("id", user.getUserAccountId() + "");
+        intent.putExtra("name", mUserNameEditText.getText().toString());
+        startActivity(intent);
     }
     protected void loginUnSuccessful() {
         Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();

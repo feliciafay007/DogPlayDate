@@ -37,10 +37,13 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, Void> {
             googleMap = (GoogleMap) inputObj[0];
             googlePlacesJson = new JSONObject((String) inputObj[1]);
             googlePlacesList = placeJsonParser.parse(googlePlacesJson);
-            //markerMap2 = (HashMap<String, Marker>) inputObj[2];
-            markerMap2 = new HashMap<String, Marker>();
+            markerMap2 = (HashMap<String, Marker>) inputObj[2];
+            System.out.println("inputObj.length1 length length length length length = "  + inputObj.length);
+            //markerMap2 = new HashMap<String, Marker>();
             //return markerHashMap;
         } catch (Exception e) {
+            //进入到了这里，出exception了，length = 2
+            System.out.println("inputObj.length2 length length length length length = "  + inputObj.length);
             Log.d("Exception", e.toString());
         }
         //return googlePlacesList;
@@ -71,8 +74,16 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, Void> {
             Marker locationMarker = googleMap.addMarker(markerOptions);
             //@Felicia
             //System.out.println("listsize" + list.size() + ", " + placeName);
-            markerMap2.put(latLng.toString(), locationMarker);
-            System.out.println("mhashMap" + markerMap2.size() + ", " + placeName);
+            try {
+                if (markerMap2 != null) {
+                    markerMap2.put(latLng.toString(), locationMarker);
+                } else {
+                    System.out.println("nullnullnullnullnullnullnullnull");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //System.out.println("mhashMap" + markerMap2.size() + ", " + placeName);
         }
     }
 

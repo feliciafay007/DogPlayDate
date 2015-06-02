@@ -183,7 +183,6 @@ public class CreatePlayDate extends FragmentActivity implements
 //        for (int i = 0; i < markerArrayList.size(); ++i) {
 //            Log.i("FFFF", markerArrayList.get(i));
 //        }
-
     }
 
 
@@ -205,7 +204,7 @@ public class CreatePlayDate extends FragmentActivity implements
 //        Object[] toPass = new Object[2];
 //        toPass[0] = googleMap;
 //        toPass[1] = googlePlacesUrl.toString();
-        Object[] toPass = new Object[3];
+        Object[] toPass = new Object[10];
         toPass[0] = googleMap;
         toPass[1] = googlePlacesUrl.toString();
         markerHashMap = new HashMap<String, Marker>();
@@ -216,6 +215,7 @@ public class CreatePlayDate extends FragmentActivity implements
         //Integer i = new Integer(1);
         //HashMap<String, Marker> markerHashMap;
         //toRecieve[0]= markerHashMap;
+        System.out.println("inputObj.length3 length length length length length = "  + toPass.length + toPass[2]);
         googlePlacesReadTask.execute(toPass);
         //googlePlacesReadTask.execute(toPass, null, null);  //这是错误的！！！
         //markerHashMap = (HashMap<String, Marker>) toReceive;

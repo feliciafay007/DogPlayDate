@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -9,7 +10,7 @@
     android:background="#F5DAF7"
     android:padding="60dp">
 
-    <ImageView
+    <com.parse.ParseImageView
         android:id="@+id/profileImg"
         android:layout_width="160dp"
         android:layout_height="160dp"
@@ -18,12 +19,22 @@
         android:onClick="addProfileImg"
         />
     <TextView
+        android:id="@+id/profileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/profileImg"
-        android:text="Name"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:layout_margin="25dp" />
+
+    <Button
+        android:id="@+id/uploadProfileImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileName"
+        android:layout_alignParentRight="true"
+        android:textSize="20dp"
+        android:text="Upload"/>
+
 
     <TextView
         android:id="@+id/mydog"
@@ -34,7 +45,7 @@
         android:layout_marginTop="20dp"
         android:textSize="32dp"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/dogImg2"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -44,7 +55,7 @@
         android:layout_marginTop="20dp"
         android:onClick="addDogImg2"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/dogImg1"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -56,7 +67,7 @@
         android:layout_marginTop="20dp"
         android:onClick="addDogImg1"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/dogImg3"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -67,6 +78,33 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:onClick="addDogImg3"/>
+
+    <Button
+        android:id="@+id/btn_friendsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:text="Friends"
+        />
+
+    <Button
+        android:id="@+id/btn_route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/btn_friendsList"
+        android:layout_alignParentBottom="true"
+        android:text="Route"
+        />
+
+    <Button
+        android:id="@+id/btn_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="Events"
+        />
 
 
 </RelativeLayout>

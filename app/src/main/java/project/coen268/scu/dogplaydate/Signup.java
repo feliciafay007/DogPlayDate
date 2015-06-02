@@ -1,4 +1,5 @@
 package project.coen268.scu.dogplaydate;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,7 +23,6 @@ import java.util.Locale;
 /**
  * Created by Lu Yu
  */
-
 public class Signup extends Activity implements OnClickListener {
     private EditText mUserNameEditText;
     private EditText mEmailEditText;
@@ -152,6 +152,7 @@ public class Signup extends Activity implements OnClickListener {
                 if (e == null) {
                     signUpMsg("Account Created Successfully");
                     Intent in = new Intent(getApplicationContext(), ProfileActivity.class);
+                    in.putExtra("name", mUserNameEditText.getText().toString());
                     startActivity(in);
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
