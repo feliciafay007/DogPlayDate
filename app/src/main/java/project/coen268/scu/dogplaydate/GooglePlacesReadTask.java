@@ -7,6 +7,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 /**
  * wenyi
@@ -16,11 +17,11 @@ public class GooglePlacesReadTask extends AsyncTask<Object, Integer, String> {
     String googlePlacesData = null;
     GoogleMap googleMap;
     //Felicia
-    ArrayList<Marker> markerArrayList;
+    TreeSet<String> markerKeySet;
 
 
-    public GooglePlacesReadTask (ArrayList<Marker> paraArrList) {
-        this.markerArrayList = paraArrList;
+    public GooglePlacesReadTask (TreeSet<String> paraMarkerSet) {
+        this.markerKeySet = paraMarkerSet;
     }
 
     @Override
@@ -38,7 +39,7 @@ public class GooglePlacesReadTask extends AsyncTask<Object, Integer, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        PlacesDisplayTask placesDisplayTask = new PlacesDisplayTask(markerArrayList);
+        PlacesDisplayTask placesDisplayTask = new PlacesDisplayTask(markerKeySet);
         Object[] toPass = new Object[2];
         toPass[0] = googleMap;
         toPass[1] = result;

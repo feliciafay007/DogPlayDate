@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.TreeSet;
 
 import android.widget.EditText;
 import android.widget.TextView;
@@ -92,7 +93,10 @@ public class CreatePlayDate extends FragmentActivity implements
     private TextView textViewChosenPlace;
     private LatLng latLng;
     //private HashMap<String, Marker> markerHashMap;
-    private ArrayList<Marker> markerArrayList;
+    //private ArrayList<Marker> markerArrayList;
+    private TreeSet<String> markerKeySet;
+
+
 
 
     // NOTE: server key is recommend, though it seems that server key or browser key both work fine.
@@ -106,7 +110,8 @@ public class CreatePlayDate extends FragmentActivity implements
         Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
-        markerArrayList = new ArrayList<Marker>();
+        //markerArrayList = new ArrayList<Marker>();
+        markerKeySet = new TreeSet<String>();
 
         editTextSearchPlace =  (EditText) findViewById(R.id.editTextSearchPlace);
         textViewChosenPlace = (TextView) findViewById(R.id.textViewChosenPlace);
@@ -135,7 +140,7 @@ public class CreatePlayDate extends FragmentActivity implements
                 place = marker.getTitle();
                 pointLat = Double.toString(latLng.latitude);
                 pointLng = Double.toString(latLng.longitude);
-                textViewChosenPlace.setText("Loc: "  + place + "," + latLng.toString());
+                textViewChosenPlace.setText("Loc: " + place + "," + latLng.toString());
                 //System.out.println("FF_MARKER_2 : " + marker.getTitle() + "," + marker.getSnippet() + marker.getPosition().toString());
                 return true;
             }
@@ -177,9 +182,13 @@ public class CreatePlayDate extends FragmentActivity implements
 
     public void onClickSearch(View v) {
 
-        markerArrayList.clear();
-        searchNearbyParks(v, markerArrayList);
-        searchEventedParks(v);
+        //markerArrayList.clear();
+        markerKeySet.clear();
+        //searchNearbyParks(v, markerArrayList);
+        //queryEventedMarker(v);
+        //searchNearbyParks(v, markerKeySet);
+        //searchEventedParks(v);
+        colortMarkers(v);
         //test
         //Iterator it = markerHashMap.entrySet().iterator();
 //        for (HashMap.Entry<String, Marker> entry : markerHashMap.entrySet()) {
@@ -188,7 +197,7 @@ public class CreatePlayDate extends FragmentActivity implements
     }
 
 
-    public void searchNearbyParks(View v, ArrayList<Marker> markerArrList) {
+    public void searchNearbyParks(View v, TreeSet<String> paraMarkerSet) {
         // NOTE: the TYPE keyword should be lower case letters
         String type = editTextSearchPlace.getText().toString().toLowerCase();
         if (type == null || type.isEmpty()) {
@@ -218,16 +227,16 @@ public class CreatePlayDate extends FragmentActivity implements
         //HashMap<String, Marker> markerHashMap;
         //toRecieve[0]= markerHashMap;
         //System.out.println("inputObj.length3 length length length length length = "  + toPass.length);
-        GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask(markerArrayList);
+        GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask(markerKeySet);
         googlePlacesReadTask.execute(toPass);
         //googlePlacesReadTask.execute(toPass, null, null);  //这是错误的！！！
         //markerHashMap = (HashMap<String, Marker>) toReceive;for ()
 //
 
-        for (int i = 0; i < markerArrayList.size(); ++i) {
-            System.out.println("FFFF SUCCESS: " + markerArrayList.get(i).getTitle());
-        }
-        //System.out.println("Arraylist Arraylist Arraylist Arraylist Arraylist= "  + markerArrayList.size());
+//        for (int i = 0; i < markerArrayList.size(); ++i) {
+//            System.out.println("FFFF SUCCESS: " + markerArrayList.get(i).getTitle());
+//        }
+//        //System.out.println("Arraylist Arraylist Arraylist Arraylist Arraylist= "  + markerArrayList.size());
 
     }
 
@@ -409,50 +418,28 @@ public class CreatePlayDate extends FragmentActivity implements
     }
 
 
-    void queryEventedMarker() {
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery(TABLENAME_PLAYDATELIST);
-//        //todo: uncommetn this  line
-//        //query.whereEqualTo("userID", userID);
-//        //query.setLimit(30); // default is 100.
-//        query.
-//        query.findInBackground(new FindCallback<ParseObject>() {
-//            public void done(List<ParseObject> recordList, ParseException e) {
-//                if (e == null) {
-//                    int currentCounter = 0;
-//                    int historyCounter = 0;
-//                    for (ParseObject myObject : recordList) {
-//                        DatesRecordEntity oneRecord = new DatesRecordEntity(
-//                                myObject.getDate("startTime"),
-//                                myObject.getDate("endTime"),
-//                                myObject.getString("userName"),
-//                                myObject.getString("userID"),
-//                                myObject.getString("dogName"),
-//                                myObject.getString("dogID"),
-//                                myObject.getString("place"),
-//                                myObject.getObjectId(),
-//                                myObject.getBoolean("isValid"),
-//                                myObject.getInt("status")
-//                        );
-//                        //todo: might want to comment out these two lines
-//                        //System.out.println(oneRecord.toString());
-//                        //System.out.println("list size " + currentDatesRecord.size());
-//                        if (oneRecord.getEndTime().before(compareDateBaseline.getTime())) {
-//                            historyDatesRecord.add(oneRecord);
-//                            historySparseArray .put(historyCounter, oneRecord);
-//                            ++historyCounter;
-//                        } else {
-//                            currentDatesRecord.add(oneRecord);
-//                            currentSparseArray.put(currentCounter, oneRecord);
-//                            ++currentCounter;
-//                        }
-//                    }
-//                    currentListsView.setAdapter(new DatesRecordAdapter(getApplicationContext(), R.layout.row_playdateslist, currentDatesRecord));
-//                    historyListsView.setAdapter(new DatesRecordAdapter(getApplicationContext(), R.layout.row_playdateslist, historyDatesRecord));
-//                } else {
-//                    Log.d("FF", "Error: " + e.getMessage());
-//                    return;
-//                }
-//            }
-//        });
+    void colortMarkers(final View v) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(TABLENAME_PLAYDATELIST);
+        //todo:  add query constraint, radius within kilomites.
+        //query.setLimit(30); // default is 100.
+        query.whereGreaterThan("startTime",compareDateBaseline.getTime() );
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> recordList, ParseException e) {
+                if (e == null) {
+                    for (ParseObject myObject : recordList) {
+                        String markerKey = myObject.getString("pointLat");
+                        markerKey = markerKey + myObject.getString("pointLng");
+                        markerKeySet.add(markerKey);
+                    }
+                    for (String s : markerKeySet) {
+                        System.out.println("FFFFFF4 + " + s);
+                    }
+                    searchNearbyParks(v, markerKeySet);
+                } else {
+                    Log.d("FFFFFFF5", "Error: " + e.getMessage());
+                    return;
+                }
+            }
+        });
     }
 }
