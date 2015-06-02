@@ -16,7 +16,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
 
 import java.lang.reflect.Array;
@@ -42,6 +44,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 // reference
 // http://javapapers.com/android/find-places-nearby-in-google-maps-using-google-places-apiandroid-app/
@@ -133,7 +136,7 @@ public class CreatePlayDate extends FragmentActivity implements
                 pointLat = Double.toString(latLng.latitude);
                 pointLng = Double.toString(latLng.longitude);
                 textViewChosenPlace.setText("Loc: "  + place + "," + latLng.toString());
-                System.out.println("FF_MARKER_2 : " + marker.getTitle() + "," + marker.getSnippet() + marker.getPosition().toString());
+                //System.out.println("FF_MARKER_2 : " + marker.getTitle() + "," + marker.getSnippet() + marker.getPosition().toString());
                 return true;
             }
         });
@@ -198,7 +201,7 @@ public class CreatePlayDate extends FragmentActivity implements
         googlePlacesUrl.append("&sensor=true");
         googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
         Toast.makeText(getApplicationContext(), googlePlacesUrl.toString(), Toast.LENGTH_SHORT).show();
-        System.out.println(googlePlacesUrl.toString());
+        //System.out.println(googlePlacesUrl.toString());
 
 //        Object[] toPass = new Object[2];
 //        toPass[0] = googleMap;
@@ -214,7 +217,7 @@ public class CreatePlayDate extends FragmentActivity implements
         //Integer i = new Integer(1);
         //HashMap<String, Marker> markerHashMap;
         //toRecieve[0]= markerHashMap;
-        System.out.println("inputObj.length3 length length length length length = "  + toPass.length);
+        //System.out.println("inputObj.length3 length length length length length = "  + toPass.length);
         GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask(markerArrayList);
         googlePlacesReadTask.execute(toPass);
         //googlePlacesReadTask.execute(toPass, null, null);  //这是错误的！！！
@@ -224,7 +227,7 @@ public class CreatePlayDate extends FragmentActivity implements
         for (int i = 0; i < markerArrayList.size(); ++i) {
             System.out.println("FFFF SUCCESS: " + markerArrayList.get(i).getTitle());
         }
-        System.out.println("Arraylist Arraylist Arraylist Arraylist Arraylist= "  + markerArrayList.size());
+        //System.out.println("Arraylist Arraylist Arraylist Arraylist Arraylist= "  + markerArrayList.size());
 
     }
 
@@ -322,7 +325,7 @@ public class CreatePlayDate extends FragmentActivity implements
         Intent intentViewDatesList = new Intent (CreatePlayDate.this, ViewDatesList.class);
         Toast.makeText(this, newSetDateStart.toString() + "\n" + newSetDateEnd.toString(), Toast.LENGTH_SHORT).show();
         startActivity(intentViewDatesList);//要把startActivity写在onClickCreate的最后一行，否则系统会时不时crash
-
+//@Felicia 放在这里来调试，是为了保证AsyncTask线程的返回结果全部获取了之后，再显示。
 //        for (int i = 0; i < markerArrayList.size(); ++i) {
 //            System.out.println("FFFF SUCCESS: " + markerArrayList.get(i).getTitle());
 //        }
@@ -355,9 +358,9 @@ public class CreatePlayDate extends FragmentActivity implements
     }
 
     private boolean validateStartEndDates () {
-        System.out.println(newSetDateStart.toString());
-        System.out.println(compareDateBaseline.toString());
-        System.out.println(newSetDateEnd.toString());
+//        System.out.println(newSetDateStart.toString());
+//        System.out.println(compareDateBaseline.toString());
+//        System.out.println(newSetDateEnd.toString());
         return (!newSetDateStart.before(compareDateBaseline)) && newSetDateStart.before(newSetDateEnd);
     }
 
@@ -403,5 +406,53 @@ public class CreatePlayDate extends FragmentActivity implements
                 editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
             }
         }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE),false );
+    }
+
+
+    void queryEventedMarker() {
+//        ParseQuery<ParseObject> query = ParseQuery.getQuery(TABLENAME_PLAYDATELIST);
+//        //todo: uncommetn this  line
+//        //query.whereEqualTo("userID", userID);
+//        //query.setLimit(30); // default is 100.
+//        query.
+//        query.findInBackground(new FindCallback<ParseObject>() {
+//            public void done(List<ParseObject> recordList, ParseException e) {
+//                if (e == null) {
+//                    int currentCounter = 0;
+//                    int historyCounter = 0;
+//                    for (ParseObject myObject : recordList) {
+//                        DatesRecordEntity oneRecord = new DatesRecordEntity(
+//                                myObject.getDate("startTime"),
+//                                myObject.getDate("endTime"),
+//                                myObject.getString("userName"),
+//                                myObject.getString("userID"),
+//                                myObject.getString("dogName"),
+//                                myObject.getString("dogID"),
+//                                myObject.getString("place"),
+//                                myObject.getObjectId(),
+//                                myObject.getBoolean("isValid"),
+//                                myObject.getInt("status")
+//                        );
+//                        //todo: might want to comment out these two lines
+//                        //System.out.println(oneRecord.toString());
+//                        //System.out.println("list size " + currentDatesRecord.size());
+//                        if (oneRecord.getEndTime().before(compareDateBaseline.getTime())) {
+//                            historyDatesRecord.add(oneRecord);
+//                            historySparseArray .put(historyCounter, oneRecord);
+//                            ++historyCounter;
+//                        } else {
+//                            currentDatesRecord.add(oneRecord);
+//                            currentSparseArray.put(currentCounter, oneRecord);
+//                            ++currentCounter;
+//                        }
+//                    }
+//                    currentListsView.setAdapter(new DatesRecordAdapter(getApplicationContext(), R.layout.row_playdateslist, currentDatesRecord));
+//                    historyListsView.setAdapter(new DatesRecordAdapter(getApplicationContext(), R.layout.row_playdateslist, historyDatesRecord));
+//                } else {
+//                    Log.d("FF", "Error: " + e.getMessage());
+//                    return;
+//                }
+//            }
+//        });
     }
 }
