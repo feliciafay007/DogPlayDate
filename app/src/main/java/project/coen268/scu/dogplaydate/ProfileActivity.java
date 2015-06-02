@@ -11,6 +11,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -41,7 +44,7 @@ import java.util.List;
 /**
  * Created by Lu Yu
  */
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends ActionBarActivity {
 
     //    private ImageView profileImage;
     private ParseImageView profileImage;
@@ -301,5 +304,36 @@ public class ProfileActivity extends Activity {
         return cameraImageFile;
     }
 
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+//            case R.id.menu_forgot_password:
+//                forgotPassword();
+//                return true;
+            case R.id.menu_share:
+                share_your_app();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void share_your_app () {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Here is a nice app that we can use together";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Hi, Let's use DogPlayDate");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+    }
 
 }

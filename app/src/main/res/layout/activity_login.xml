@@ -19,7 +19,9 @@
         android:gravity="center"
         android:textSize="40dp"
         android:textStyle="bold|italic"
-        android:theme="@style/TextAppearance.AppCompat.Title.Inverse" />
+        android:theme="@style/TextAppearance.AppCompat.Title.Inverse"/>
+
+
 
     <ImageButton
         android:id="@+id/btn_fb"

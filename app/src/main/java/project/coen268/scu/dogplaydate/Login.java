@@ -148,9 +148,9 @@ public class Login extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.menu_forgot_password:
-                forgotPassword();
-                return true;
+//            case R.id.menu_forgot_password:
+//                forgotPassword();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -224,7 +224,7 @@ public class Login extends Activity {
     }
     protected void loginUnSuccessful() {
         Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-        showAlertDialog(Login.this,"Login", "Username or Password is invalid.", false);
+        showAlertDialog(Login.this, "Login", "Username or Password is invalid.", false);
     }
 
     private void clearErrors(){
@@ -254,4 +254,5 @@ public class Login extends Activity {
         // Showing Alert Message
         alertDialog.show();
     }
+
 }
