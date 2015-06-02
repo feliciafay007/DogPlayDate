@@ -88,9 +88,9 @@ public class CreatePlayDate extends FragmentActivity implements
     private static final String TABLENAME_PLAYDATELIST  = "playDatesListsTable";
     private TextView textViewChosenPlace;
     private LatLng latLng;
-    private HashMap<String, Marker> markerHashMap;
-    //private ArrayList<Marker> markerArrayList;
-    //public List<HashMap<String, String>> listHashMap;
+    //private HashMap<String, Marker> markerHashMap;
+    private ArrayList<Marker> markerArrayList;
+
 
     // NOTE: server key is recommend, though it seems that server key or browser key both work fine.
     private static final String GOOGLE_API_KEY = "AIzaSyDVGQDiBMRR0pXxAOrdWPwHaPiQXJMQc08"; //server key
@@ -102,6 +102,8 @@ public class CreatePlayDate extends FragmentActivity implements
         setContentView(R.layout.activity_create_play_date);
         Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
         ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        markerArrayList = new ArrayList<Marker>();
 
         editTextSearchPlace =  (EditText) findViewById(R.id.editTextSearchPlace);
         textViewChosenPlace = (TextView) findViewById(R.id.textViewChosenPlace);
@@ -135,6 +137,7 @@ public class CreatePlayDate extends FragmentActivity implements
                 return true;
             }
         });
+
 
     }
 
@@ -170,23 +173,19 @@ public class CreatePlayDate extends FragmentActivity implements
 
 
     public void onClickSearch(View v) {
-        markerHashMap = new HashMap<String, Marker>();
-        //markerArrayList = new ArrayList<Marker> ();
 
-        searchNearbyParks(v, markerHashMap);
+        markerArrayList.clear();
+        searchNearbyParks(v, markerArrayList);
         searchEventedParks(v);
         //test
         //Iterator it = markerHashMap.entrySet().iterator();
-        for (HashMap.Entry<String, Marker> entry : markerHashMap.entrySet()) {
-            System.out.println("mhashMapFFFF" + entry.getValue().getTitle());
-        }
-//        for (int i = 0; i < markerArrayList.size(); ++i) {
-//            Log.i("FFFF", markerArrayList.get(i));
+//        for (HashMap.Entry<String, Marker> entry : markerHashMap.entrySet()) {
+//            System.out.println("mhashMapFFFF" + entry.getValue().getTitle());
 //        }
     }
 
 
-    public void searchNearbyParks(View v, HashMap<String, Marker> markerArrList) {
+    public void searchNearbyParks(View v, ArrayList<Marker> markerArrList) {
         // NOTE: the TYPE keyword should be lower case letters
         String type = editTextSearchPlace.getText().toString().toLowerCase();
         if (type == null || type.isEmpty()) {
@@ -200,25 +199,32 @@ public class CreatePlayDate extends FragmentActivity implements
         googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
         Toast.makeText(getApplicationContext(), googlePlacesUrl.toString(), Toast.LENGTH_SHORT).show();
         System.out.println(googlePlacesUrl.toString());
-        GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask();
+
 //        Object[] toPass = new Object[2];
 //        toPass[0] = googleMap;
 //        toPass[1] = googlePlacesUrl.toString();
-        Object[] toPass = new Object[10];
+        Object[] toPass = new Object[3];
         toPass[0] = googleMap;
         toPass[1] = googlePlacesUrl.toString();
-        markerHashMap = new HashMap<String, Marker>();
-        toPass[2] = markerHashMap;
+        //markerHashMap = new HashMap<String, Marker>();
+        //toPass[2] = markerArrayList;
         //googlePlacesReadTask.execute(toPass);
         //Object toReceive = new Object();
         //toRecieve[0] = listHashMap;
         //Integer i = new Integer(1);
         //HashMap<String, Marker> markerHashMap;
         //toRecieve[0]= markerHashMap;
-        System.out.println("inputObj.length3 length length length length length = "  + toPass.length + toPass[2]);
+        System.out.println("inputObj.length3 length length length length length = "  + toPass.length);
+        GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask(markerArrayList);
         googlePlacesReadTask.execute(toPass);
         //googlePlacesReadTask.execute(toPass, null, null);  //这是错误的！！！
-        //markerHashMap = (HashMap<String, Marker>) toReceive;
+        //markerHashMap = (HashMap<String, Marker>) toReceive;for ()
+//
+
+        for (int i = 0; i < markerArrayList.size(); ++i) {
+            System.out.println("FFFF SUCCESS: " + markerArrayList.get(i).getTitle());
+        }
+        System.out.println("Arraylist Arraylist Arraylist Arraylist Arraylist= "  + markerArrayList.size());
 
     }
 
@@ -316,6 +322,11 @@ public class CreatePlayDate extends FragmentActivity implements
         Intent intentViewDatesList = new Intent (CreatePlayDate.this, ViewDatesList.class);
         Toast.makeText(this, newSetDateStart.toString() + "\n" + newSetDateEnd.toString(), Toast.LENGTH_SHORT).show();
         startActivity(intentViewDatesList);//要把startActivity写在onClickCreate的最后一行，否则系统会时不时crash
+
+//        for (int i = 0; i < markerArrayList.size(); ++i) {
+//            System.out.println("FFFF SUCCESS: " + markerArrayList.get(i).getTitle());
+//        }
+//        System.out.println("Arraylist Arraylist Arraylist Arraylist Arraylist= " + markerArrayList.size());
     }
 
 

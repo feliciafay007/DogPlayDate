@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.Marker;
+
+import java.util.ArrayList;
 
 /**
  * wenyi
@@ -12,6 +15,13 @@ import com.google.android.gms.maps.GoogleMap;
 public class GooglePlacesReadTask extends AsyncTask<Object, Integer, String> {
     String googlePlacesData = null;
     GoogleMap googleMap;
+    //Felicia
+    ArrayList<Marker> markerArrayList;
+
+
+    public GooglePlacesReadTask (ArrayList<Marker> paraArrList) {
+        this.markerArrayList = paraArrList;
+    }
 
     @Override
     protected String doInBackground(Object... inputObj) {
@@ -28,7 +38,7 @@ public class GooglePlacesReadTask extends AsyncTask<Object, Integer, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        PlacesDisplayTask placesDisplayTask = new PlacesDisplayTask();
+        PlacesDisplayTask placesDisplayTask = new PlacesDisplayTask(markerArrayList);
         Object[] toPass = new Object[2];
         toPass[0] = googleMap;
         toPass[1] = result;
