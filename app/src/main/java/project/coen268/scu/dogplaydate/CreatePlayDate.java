@@ -173,7 +173,7 @@ public class CreatePlayDate extends FragmentActivity implements
             }
         });
 
-        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF SUCCESS 3 " + userID + ", " + dogName + ", " + dogIDString);
+//        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF SUCCESS 3 " + userID + ", " + dogName + ", " + dogIDString);
 
     }
 

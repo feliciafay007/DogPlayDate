@@ -3,55 +3,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_selector2">
-
+    
     <Button
-        android:id="@+id/uploadbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UpLoad"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="43dp"
-        android:background="@drawable/mybutton"/>
-
+    android:id="@+id/uploadbtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="UpLoad"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="43dp"
+    android:background="@drawable/mybutton"/>
+    
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-
-        android:id="@+id/imageView2"
-        android:src="@drawable/addimg"
-        android:background="#FFCCCC"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp" />
-
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    
+    android:id="@+id/imageView2"
+    android:src="@drawable/addimg"
+    android:background="@drawable/corners"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="47dp" />
+    
     <EditText
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:id="@+id/editText4"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:hint="Date"
-        android:background="@drawable/edit_text_border"/>
-
+    android:layout_width="200dp"
+    android:layout_height="40dp"
+    android:id="@+id/editText4"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:hint="Date"
+    android:background="@drawable/edit_text_border"/>
+    
     <EditText
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:id="@+id/editText5"
-        android:layout_below="@+id/editText4"
-        android:layout_centerHorizontal="true"
-        android:hint="Position"
-        android:background="@drawable/edit_text_border"
-        android:layout_marginTop="10dp" />
-
+    android:layout_width="200dp"
+    android:layout_height="40dp"
+    android:id="@+id/editText5"
+    android:layout_below="@+id/editText4"
+    android:layout_centerHorizontal="true"
+    android:hint="Position"
+    android:background="@drawable/edit_text_border"
+    android:layout_marginTop="10dp" />
+    
     <EditText
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:id="@+id/editText6"
-        android:layout_below="@+id/editText5"
-        android:layout_centerHorizontal="true"
-        android:hint="Memo"
-        android:background="@drawable/edit_text_border"
-        android:layout_marginTop="10dp" />
-
+    android:layout_width="200dp"
+    android:layout_height="40dp"
+    android:id="@+id/editText6"
+    android:layout_below="@+id/editText5"
+    android:layout_centerHorizontal="true"
+    android:hint="Memo"
+    android:background="@drawable/edit_text_border"
+    android:layout_marginTop="10dp" />
+    
 </RelativeLayout>

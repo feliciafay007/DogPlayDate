@@ -6,79 +6,79 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".DogProfile"
     android:background="@drawable/background_selector2"
     android:id="@+id/DogProfile">
-
+    
     <com.parse.ParseImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="#FFCCCC"
-        android:src="@drawable/addimg"
-        />
-
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    
+    android:id="@+id/imageView"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    
+    android:src="@drawable/addimg"
+    android:background="@drawable/corners"
+    />
+    
     <EditText
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:id="@+id/editText"
-        android:hint="Dog's Name"
-        android:background="@drawable/edit_text_border"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
-        android:layout_alignParentEnd="false" />
-
+    android:layout_width="200dp"
+    android:layout_height="40dp"
+    android:id="@+id/editText"
+    android:hint="Dog's Name"
+    android:background="@drawable/edit_text_border"
+    android:layout_below="@+id/imageView"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="51dp"
+    android:layout_alignParentEnd="false" />
+    
     <EditText
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
-        android:layout_centerHorizontal="true"
-        android:hint="Dog's Age"
-        android:background="@drawable/edit_text_border"
-        android:layout_marginTop="10dp"/>
-
+    android:layout_width="200dp"
+    android:layout_height="40dp"
+    android:id="@+id/editText2"
+    android:layout_below="@+id/editText"
+    android:layout_centerHorizontal="true"
+    android:hint="Dog's Age"
+    android:background="@drawable/edit_text_border"
+    android:layout_marginTop="10dp"/>
+    
     <EditText
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:id="@+id/editText3"
-        android:hint="Breed"
-        android:background="@drawable/edit_text_border"
-        android:layout_below="@+id/editText2"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignStart="@+id/editText2"
-        android:layout_marginTop="10dp"/>
-
+    android:layout_width="200dp"
+    android:layout_height="40dp"
+    android:id="@+id/editText3"
+    android:hint="Breed"
+    android:background="@drawable/edit_text_border"
+    android:layout_below="@+id/editText2"
+    android:layout_alignLeft="@+id/editText2"
+    android:layout_alignStart="@+id/editText2"
+    android:layout_marginTop="10dp"/>
+    
     <Button
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:text="View Album"
-        android:id="@+id/button"
-        android:background="@drawable/mybutton"
-        android:layout_below="@+id/button3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
-
+    android:layout_width="200dp"
+    android:layout_height="30dp"
+    android:text="View Album"
+    android:id="@+id/button"
+    android:background="@drawable/mybutton"
+    android:layout_below="@+id/button3"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp" />
+    
     <Button
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:text="Save"
-        android:id="@+id/button2"
-        android:background="@drawable/mybutton"
-        android:layout_below="@+id/editText3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
-
+    android:layout_width="200dp"
+    android:layout_height="30dp"
+    android:text="Save"
+    android:id="@+id/button2"
+    android:background="@drawable/mybutton"
+    android:layout_below="@+id/editText3"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp"/>
+    
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:text="Create Album"
-        android:id="@+id/button3"
-        android:background="@drawable/mybutton"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2"
-        android:layout_marginTop="10dp" />
+    android:layout_width="200dp"
+    android:layout_height="30dp"
+    android:text="Create Album"
+    android:id="@+id/button3"
+    android:background="@drawable/mybutton"
+    android:layout_below="@+id/button2"
+    android:layout_alignLeft="@+id/button2"
+    android:layout_alignStart="@+id/button2"
+    android:layout_marginTop="10dp" />
 </RelativeLayout>

@@ -27,7 +27,8 @@
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
             android:onClick="addProfileImg"
-            android:src="@drawable/addimg" />
+            android:src="@drawable/addimg"
+            android:background="@drawable/corners"/>
 
         <TextView
             android:id="@+id/profileName"
@@ -39,13 +40,16 @@
 
         <Button
             android:id="@+id/uploadProfileImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_toRightOf="@id/profileImg"
             android:layout_below="@+id/profileName"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25dp"
             android:text="Upload"
-            android:textSize="20dp" />
+            android:textSize="15dp"
+            android:background="@drawable/mybutton"
+            />
 
 
         <TextView
@@ -66,10 +70,11 @@
             android:layout_below="@+id/mydog"
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
-            android:background="@android:color/transparent"
+            android:background="@drawable/corners"
             android:onClick="addDogImg2"
             android:scaleType="fitXY"
-            android:src="@drawable/addimg" />
+            android:src="@drawable/addimg"
+            />
 
         <com.parse.ParseImageView
             android:id="@+id/dogImg1"
@@ -80,7 +85,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:layout_toLeftOf="@+id/dogImg2"
-            android:background="@android:color/transparent"
+            android:background="@drawable/corners"
             android:onClick="addDogImg1"
             android:scaleType="fitXY"
             android:src="@drawable/addimg" />
@@ -94,7 +99,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/dogImg2"
-            android:background="@android:color/transparent"
+            android:background="@drawable/corners"
             android:onClick="addDogImg3"
             android:scaleType="fitXY"
             android:src="@drawable/addimg" />
@@ -113,10 +118,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="20dp"
             android:layout_toRightOf="@id/btn_friendsList"
             android:background="@drawable/mybutton"
-            android:text="Location" />
+            android:text="Location"
+            android:layout_marginLeft="10dp" />
 
         <Button
             android:id="@+id/btn_event"
@@ -126,6 +131,33 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/mybutton"
             android:text="Events" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/imageView3"
+            android:background="@drawable/dog1"
+            android:layout_below="@+id/dogImg1"
+            android:layout_alignEnd="@+id/dogImg1"
+            android:layout_marginTop="53dp" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/imageView4"
+            android:layout_alignTop="@+id/imageView3"
+            android:layout_alignStart="@+id/btn_route"
+            android:background="@drawable/dog4"
+            android:layout_alignEnd="@+id/dogImg2" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/imageView5"
+            android:layout_alignTop="@+id/imageView4"
+            android:layout_alignStart="@+id/btn_event"
+            android:background="@drawable/dog3"
+            />
 
 
     </RelativeLayout>

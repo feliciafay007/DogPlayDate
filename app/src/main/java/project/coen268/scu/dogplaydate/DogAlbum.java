@@ -39,7 +39,7 @@ public class DogAlbum extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dogalbum_layout);
+        setContentView(R.layout.activity_dog_album);
 
         Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
         ParseInstallation.getCurrentInstallation().saveInBackground();

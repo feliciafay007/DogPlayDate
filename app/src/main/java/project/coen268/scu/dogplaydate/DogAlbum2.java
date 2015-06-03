@@ -35,7 +35,7 @@ public class DogAlbum2 extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 // Get the view from listview_main.xml
-        setContentView(R.layout.listview_main);
+        setContentView(R.layout.activity_dog_album2);
 
         Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
         ParseInstallation.getCurrentInstallation().saveInBackground();

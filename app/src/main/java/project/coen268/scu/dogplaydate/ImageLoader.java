@@ -38,13 +38,12 @@ public class ImageLoader {
         executorService = Executors.newFixedThreadPool(5);
     }
 
-    final int stub_id = R.drawable.ladygaga;
+    final int stub_id = R.drawable.dog1;
 
     public void DisplayImage(String url, ImageView imageView) {
 
         imageViews.put(imageView, url);
         Bitmap bitmap = memoryCache.get(url);
-        System.out.println(url+"cccccccccccc");
         if (bitmap != null)
             imageView.setImageBitmap(bitmap);
         else {
