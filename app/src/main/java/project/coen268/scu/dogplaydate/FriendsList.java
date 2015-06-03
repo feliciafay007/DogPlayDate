@@ -1,7 +1,7 @@
 package project.coen268.scu.dogplaydate;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -11,13 +11,14 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 
-public class FriendsList extends ActionBarActivity {
+public class FriendsList extends Activity {
 
 
     @Override
@@ -33,24 +34,30 @@ public class FriendsList extends ActionBarActivity {
 
             lv.setAdapter(listAdapter);
 
-            ParseRelation relation = currentUser.getRelation("Friends");
+//            ParseRelation relation = currentUser.getRelation("Friends");
 
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Friends");
-            query.whereEqualTo("username", null);
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            query.whereEqualTo(ParseConstants.USER_COLUMN, currentUser.getUsername());
 
-            query.findInBackground(new FindCallback<ParseObject>() {
+            query.findInBackground(new FindCallback<ParseUser>() {
 
                 @Override
-                public void done(List<ParseObject> list, ParseException e) {
-
-                    for (int i = 0; i < list.size(); i++) {
-                        ParseObject friends = list.get(i);
-                        String name = friends.getString("username").toString();
-
-                        listAdapter.add(name);
+                public void done(List<ParseUser> list, ParseException e) {
+                    if (e == null) {
+                        for (int i = 0; i < list.size(); i++) {
+                            ParseObject friends = list.get(i);
+//                            System.out.println("friends: " + friends.get(ParseConstants.FRIEND_COLUMN));
+                            ArrayList<String> friendList = (ArrayList<String>) friends.get(ParseConstants.FRIEND_COLUMN);
+                            if (friendList != null && !friendList.isEmpty()) {
+                                TreeSet<String> set = new TreeSet<String>(friendList);
+                                for (String friend : set) {
+                                    listAdapter.add(friend);
+                                }
+                            }
+                        }
                     }
-
                 }
+
             });
         }
 
@@ -79,5 +86,3 @@ public class FriendsList extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
-

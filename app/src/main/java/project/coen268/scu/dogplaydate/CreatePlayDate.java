@@ -66,6 +66,7 @@ public class CreatePlayDate extends FragmentActivity implements
     private GoogleMap googleMap;
     private int PROXIMITY_RADIUS = 2000;
     private Button buttonCreate;
+    private Button buttonJoin;
     private EditText editTextSearchPlace;
     private DatePickerDialog datePickerDialogStart;
     private DatePickerDialog datePickerDialogEnd;
@@ -114,6 +115,8 @@ public class CreatePlayDate extends FragmentActivity implements
         markerKeySet = new TreeSet<String>();
 
         editTextSearchPlace =  (EditText) findViewById(R.id.editTextSearchPlace);
+        buttonJoin = (Button) findViewById(R.id.btnJoin);
+        buttonJoin.setVisibility(View.GONE);
         textViewChosenPlace = (TextView) findViewById(R.id.textViewChosenPlace);
         googleMap = ((MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map)).getMap();
@@ -147,9 +150,9 @@ public class CreatePlayDate extends FragmentActivity implements
                 String markerKey = Double.toString(marker.getPosition().latitude) +
                                 Double.toString(marker.getPosition().longitude);
                 if (markerKeySet.contains(markerKey)) {
-
-                } else {
-
+                    buttonJoin.setVisibility(View.VISIBLE);
+                }else {
+                    buttonJoin.setVisibility(View.GONE);
                 }
                 return true;
             }

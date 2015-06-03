@@ -23,8 +23,7 @@ import java.util.List;
 
 public class FindFreinds extends Activity {
 
-    private static final String USER_TABLE = "User";
-    private static final String USER_COLUMN = "username";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +32,8 @@ public class FindFreinds extends Activity {
 
         final EditText sbar = (EditText)findViewById(R.id.friendsSearchBar);
         Button search = (Button)findViewById(R.id.search);
-        Button Add = (Button)findViewById(R.id.add);
-        Button btn_list = (Button) findViewById(R.id.btn_list);
+        Button add = (Button)findViewById(R.id.add);
+        Button listButton = (Button) findViewById(R.id.btn_list);
         final TextView ResultText = (TextView)findViewById(R.id.resultTextView);
         final FrameLayout ResultFrame = (FrameLayout)findViewById(R.id.resultFrameLayout);
 
@@ -48,14 +47,14 @@ public class FindFreinds extends Activity {
                 final String username = sbar.getText().toString();
 
                 ParseQuery<ParseUser> query = ParseUser.getQuery();
-                query.whereEqualTo(USER_COLUMN, username);
+                query.whereEqualTo(ParseConstants.USER_COLUMN, username);
                 query.findInBackground(new FindCallback<ParseUser>() {
 
                     @Override
                     public void done(List<ParseUser> userList, ParseException e) {
                         try {
                             ParseObject userObject = userList.get(0);
-                            ResultText.setText(userObject.getString(USER_COLUMN));
+                            ResultText.setText(userObject.getString(ParseConstants.USER_COLUMN));
                             ResultFrame.setVisibility(View.VISIBLE);
 
                             Toast.makeText(getApplicationContext(), "Friends Found",
@@ -73,7 +72,7 @@ public class FindFreinds extends Activity {
             }
         });
 
-        Add.setOnClickListener(new View.OnClickListener() {
+        add.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -81,7 +80,7 @@ public class FindFreinds extends Activity {
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 if (currentUser != null) {
                     {
-                        currentUser.add("friend", Friends);
+                        currentUser.add(ParseConstants.FRIEND_COLUMN, Friends);
                         currentUser.saveInBackground();
 
                         Toast.makeText(getApplicationContext(), "Friends Has Been Added",
@@ -93,7 +92,7 @@ public class FindFreinds extends Activity {
             }
         });
 
-        btn_list.setOnClickListener(new View.OnClickListener() {
+        listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FindFreinds.this, FriendsList.class);
