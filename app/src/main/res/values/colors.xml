@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="bg_profile">#B3E5FC</color>
     <color name="button_bg">#F0BAF5</color>
     <color name="text_bg">#19161A</color>
     <color name="label_bg">#B55BBD</color>

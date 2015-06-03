@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +44,6 @@ import java.util.List;
  * Created by Lu Yu
  */
 public class ProfileActivity extends ActionBarActivity {
-
     //    private ImageView profileImage;
     private ParseImageView profileImage;
     private Button btn_upload;
@@ -70,7 +68,7 @@ public class ProfileActivity extends ActionBarActivity {
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
         Intent intent = getIntent();
-        final String name = intent.getStringExtra("name");
+        String name = intent.getStringExtra("name");
         this.user = name;
 
         //load profile image from Parse
@@ -82,7 +80,7 @@ public class ProfileActivity extends ActionBarActivity {
             public void done(List<ParseObject> scoreList, ParseException e) {
                 if (e == null) {
                     if (!scoreList.isEmpty()) {
-                        ParseObject imageRow = scoreList.get(scoreList.size()-1);
+                        ParseObject imageRow = scoreList.get(scoreList.size() - 1);
                         ParseFile imageFile = imageRow.getParseFile(IMAGE_FILE_COLUMN);
                         profileImage.setParseFile(imageFile);
                         profileImage.loadInBackground(new GetDataCallback() {
@@ -98,9 +96,9 @@ public class ProfileActivity extends ActionBarActivity {
             }
         });
 
-        ImageButton dogImage1 = (ImageButton) findViewById(R.id.dogImg1);
-        ImageButton dogImage2 = (ImageButton) findViewById(R.id.dogImg2);
-        ImageButton dogImage3 = (ImageButton) findViewById(R.id.dogImg3);
+        ParseImageView dogImage1 = (ParseImageView) findViewById(R.id.dogImg1);
+        ParseImageView dogImage2 = (ParseImageView) findViewById(R.id.dogImg2);
+        ParseImageView dogImage3 = (ParseImageView) findViewById(R.id.dogImg3);
         TextView profileName = (TextView) findViewById(R.id.profileName);
         btn_upload = (Button) findViewById(R.id.uploadProfileImg);
         profileImage.setOnClickListener(chooseImageListener);
@@ -110,9 +108,6 @@ public class ProfileActivity extends ActionBarActivity {
         btn_friend = (Button) findViewById(R.id.btn_friendsList);
 
         profileName.setText(name);
-
-
-
 
 
 //        dogImage1.setOnClickListener(new View.OnClickListener() {
@@ -139,15 +134,25 @@ public class ProfileActivity extends ActionBarActivity {
             }
         });
 
+//        btn_event.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent addEvent = new Intent(ProfileActivity.this, Event.class);
+//                startActivity(addEvent);
+//            }
+//        });
+
+
 
         // @Wenyi
         // 1 get user ID
         // 2 get dog ID
+        final String localName = name;
         btn_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addEvent = new Intent(ProfileActivity.this, CreatePlayDate.class);
-                addEvent.putExtra("userID", name);
+                addEvent.putExtra("userID", localName);
                 //validate if there is any dog, if no ,show dialog, elese, get dog Id;
                 //addEvent.putExtra("dogID", );
                 startActivity(addEvent);
@@ -155,14 +160,14 @@ public class ProfileActivity extends ActionBarActivity {
         });
     }
 
-    View.OnClickListener chooseImageListener =  new View.OnClickListener() {
+    View.OnClickListener chooseImageListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             dialogChooseFrom();
         }
     };
 
-    View.OnClickListener uploadListener =  new View.OnClickListener() {
+    View.OnClickListener uploadListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
@@ -170,8 +175,7 @@ public class ProfileActivity extends ActionBarActivity {
 
             try {
                 image = readInFile(mCurrentPhotoPath);
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -202,17 +206,17 @@ public class ProfileActivity extends ActionBarActivity {
         }
     };
 
-    private void dialogChooseFrom(){
+    private void dialogChooseFrom() {
 
-        final CharSequence[] items={"From Gallery","From Camera"};
+        final CharSequence[] items = {"From Gallery", "From Camera"};
 
-        AlertDialog.Builder chooseDialog =new AlertDialog.Builder(this);
+        AlertDialog.Builder chooseDialog = new AlertDialog.Builder(this);
         chooseDialog.setTitle("Pick your choice").setItems(items, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if(items[which].equals("From Gallery")){
+                if (items[which].equals("From Gallery")) {
 
                     Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(galleryIntent, RESULT_LOAD_GALLERY_IMAGE);
@@ -223,7 +227,7 @@ public class ProfileActivity extends ActionBarActivity {
 
                         File photoFile = createImageFile();
                         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(photoFile));
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                         startActivityForResult(cameraIntent, RESULT_LOAD_CAMERA_IMAGE);
 
                     } catch (IOException e) {
@@ -254,8 +258,7 @@ public class ProfileActivity extends ActionBarActivity {
     }
 
 
-
-    public void onActivityResult (int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
@@ -265,7 +268,7 @@ public class ProfileActivity extends ActionBarActivity {
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-                Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
@@ -283,7 +286,7 @@ public class ProfileActivity extends ActionBarActivity {
         }
     }
 
-    private File createImageFile () throws IOException {
+    private File createImageFile() throws IOException {
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = timeStamp + "_";
@@ -305,7 +308,7 @@ public class ProfileActivity extends ActionBarActivity {
     }
 
 
-
+    //@ Wenyi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -335,5 +338,4 @@ public class ProfileActivity extends ActionBarActivity {
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
-
 }

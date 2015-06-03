@@ -1,6 +1,7 @@
 package project.coen268.scu.dogplaydate;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,8 @@ import java.util.List;
 
 public class FindFreinds extends Activity {
 
+    private static final String USER_TABLE = "User";
+    private static final String USER_COLUMN = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class FindFreinds extends Activity {
         final EditText sbar = (EditText)findViewById(R.id.friendsSearchBar);
         Button search = (Button)findViewById(R.id.search);
         Button Add = (Button)findViewById(R.id.add);
+        Button btn_list = (Button) findViewById(R.id.btn_list);
         final TextView ResultText = (TextView)findViewById(R.id.resultTextView);
         final FrameLayout ResultFrame = (FrameLayout)findViewById(R.id.resultFrameLayout);
 
@@ -43,15 +47,15 @@ public class FindFreinds extends Activity {
                 // TODO Auto-generated method stub
                 final String username = sbar.getText().toString();
 
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-                query.whereEqualTo("username", username);
-                query.findInBackground(new FindCallback<ParseObject>() {
+                ParseQuery<ParseUser> query = ParseUser.getQuery();
+                query.whereEqualTo(USER_COLUMN, username);
+                query.findInBackground(new FindCallback<ParseUser>() {
 
                     @Override
-                    public void done(List<ParseObject> objectList, ParseException e) {
+                    public void done(List<ParseUser> userList, ParseException e) {
                         try {
-                            ParseObject userObject = objectList.get(0);
-                            ResultText.setText(userObject.getString("username"));
+                            ParseObject userObject = userList.get(0);
+                            ResultText.setText(userObject.getString(USER_COLUMN));
                             ResultFrame.setVisibility(View.VISIBLE);
 
                             Toast.makeText(getApplicationContext(), "Friends Found",
@@ -86,6 +90,14 @@ public class FindFreinds extends Activity {
                     }
                 }
 
+            }
+        });
+
+        btn_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FindFreinds.this, FriendsList.class);
+                startActivity(intent);
             }
         });
     }

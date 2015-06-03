@@ -142,6 +142,15 @@ public class CreatePlayDate extends FragmentActivity implements
                 pointLng = Double.toString(latLng.longitude);
                 textViewChosenPlace.setText("Loc: " + place + "," + latLng.toString());
                 //System.out.println("FF_MARKER_2 : " + marker.getTitle() + "," + marker.getSnippet() + marker.getPosition().toString());
+
+                //if blue color
+                String markerKey = Double.toString(marker.getPosition().latitude) +
+                                Double.toString(marker.getPosition().longitude);
+                if (markerKeySet.contains(markerKey)) {
+
+                } else {
+
+                }
                 return true;
             }
         });
@@ -195,51 +204,6 @@ public class CreatePlayDate extends FragmentActivity implements
 //            System.out.println("mhashMapFFFF" + entry.getValue().getTitle());
 //        }
     }
-
-
-    public void searchNearbyParks(View v, TreeSet<String> paraMarkerSet) {
-        // NOTE: the TYPE keyword should be lower case letters
-        String type = editTextSearchPlace.getText().toString().toLowerCase();
-        if (type == null || type.isEmpty()) {
-            type = "park";
-        }
-        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        googlePlacesUrl.append("location=" + latitude + "," + longitude);
-        googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
-        googlePlacesUrl.append("&types=" + type);
-        googlePlacesUrl.append("&sensor=true");
-        googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
-        Toast.makeText(getApplicationContext(), googlePlacesUrl.toString(), Toast.LENGTH_SHORT).show();
-        //System.out.println(googlePlacesUrl.toString());
-
-//        Object[] toPass = new Object[2];
-//        toPass[0] = googleMap;
-//        toPass[1] = googlePlacesUrl.toString();
-        Object[] toPass = new Object[3];
-        toPass[0] = googleMap;
-        toPass[1] = googlePlacesUrl.toString();
-        //markerHashMap = new HashMap<String, Marker>();
-        //toPass[2] = markerArrayList;
-        //googlePlacesReadTask.execute(toPass);
-        //Object toReceive = new Object();
-        //toRecieve[0] = listHashMap;
-        //Integer i = new Integer(1);
-        //HashMap<String, Marker> markerHashMap;
-        //toRecieve[0]= markerHashMap;
-        //System.out.println("inputObj.length3 length length length length length = "  + toPass.length);
-        GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask(markerKeySet);
-        googlePlacesReadTask.execute(toPass);
-        //googlePlacesReadTask.execute(toPass, null, null);  //这是错误的！！！
-        //markerHashMap = (HashMap<String, Marker>) toReceive;for ()
-//
-
-//        for (int i = 0; i < markerArrayList.size(); ++i) {
-//            System.out.println("FFFF SUCCESS: " + markerArrayList.get(i).getTitle());
-//        }
-//        //System.out.println("Arraylist Arraylist Arraylist Arraylist Arraylist= "  + markerArrayList.size());
-
-    }
-
 
     public void searchEventedParks(View v) {
         return;
@@ -323,11 +287,17 @@ public class CreatePlayDate extends FragmentActivity implements
     }
 
     public void onClickCreate (View v) {
+
         if ( ! validateStartEndDates() ) {
             initDefaultDateTime();
             Toast.makeText(this, "please chooser a valid start and time", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if (place == null || place.isEmpty()) {
+            return;
+        }
+
         ParseObject playDatesListsTable = new ParseObject(TABLENAME_PLAYDATELIST);
         prepareParseSendingData(playDatesListsTable );
         playDatesListsTable.saveInBackground();
@@ -354,13 +324,13 @@ public class CreatePlayDate extends FragmentActivity implements
         newSetDateStart = Calendar.getInstance();
         newSetDateEnd = Calendar.getInstance();
         format = new SimpleDateFormat("MMM dd, yyyy");
-        editTextStartDate.setText(format.format(newSetDateStart.getTime()));
+        editTextStartDate.setText("  " +format.format(newSetDateStart.getTime()));
         format = new SimpleDateFormat("hh:mm a");
-        editTextStartTime.setText(format.format(newSetDateStart.getTime()));
+        editTextStartTime.setText("  " +format.format(newSetDateStart.getTime()));
         newSetDateEnd.add(Calendar.HOUR, 1);
-        editTextEndTime.setText(format.format(newSetDateEnd.getTime()));
+        editTextEndTime.setText("  " +format.format(newSetDateEnd.getTime()));
         format = new SimpleDateFormat("MMM dd, yyyy");
-        editTextEndDate.setText(format.format(newSetDateEnd.getTime()));
+        editTextEndDate.setText("  " +format.format(newSetDateEnd.getTime()));
         prepareDatePickerDialog();
         prepareTimePickerDialog();
         return;
@@ -431,9 +401,9 @@ public class CreatePlayDate extends FragmentActivity implements
                         markerKey = markerKey + myObject.getString("pointLng");
                         markerKeySet.add(markerKey);
                     }
-                    for (String s : markerKeySet) {
-                        System.out.println("FFFFFF4 + " + s);
-                    }
+//                    for (String s : markerKeySet) {
+//                        System.out.println("FFFFFF4 + " + s);
+//                    }
                     searchNearbyParks(v, markerKeySet);
                 } else {
                     Log.d("FFFFFFF5", "Error: " + e.getMessage());
@@ -442,4 +412,48 @@ public class CreatePlayDate extends FragmentActivity implements
             }
         });
     }
+
+    public void searchNearbyParks(View v, TreeSet<String> paraMarkerSet) {
+        // NOTE: the TYPE keyword should be lower case letters
+        String type = editTextSearchPlace.getText().toString().toLowerCase();
+        if (type == null || type.isEmpty()) {
+            type = "park";
+        }
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
+        googlePlacesUrl.append("&types=" + type);
+        googlePlacesUrl.append("&sensor=true");
+        googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
+        Toast.makeText(getApplicationContext(), googlePlacesUrl.toString(), Toast.LENGTH_SHORT).show();
+        //System.out.println(googlePlacesUrl.toString());
+
+//        Object[] toPass = new Object[2];
+//        toPass[0] = googleMap;
+//        toPass[1] = googlePlacesUrl.toString();
+        Object[] toPass = new Object[3];
+        toPass[0] = googleMap;
+        toPass[1] = googlePlacesUrl.toString();
+        //markerHashMap = new HashMap<String, Marker>();
+        //toPass[2] = markerArrayList;
+        //googlePlacesReadTask.execute(toPass);
+        //Object toReceive = new Object();
+        //toRecieve[0] = listHashMap;
+        //Integer i = new Integer(1);
+        //HashMap<String, Marker> markerHashMap;
+        //toRecieve[0]= markerHashMap;
+        //System.out.println("inputObj.length3 length length length length length = "  + toPass.length);
+        GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask(markerKeySet);
+        googlePlacesReadTask.execute(toPass);
+        //googlePlacesReadTask.execute(toPass, null, null);  //这是错误的！！！
+        //markerHashMap = (HashMap<String, Marker>) toReceive;for ()
+//
+
+//        for (int i = 0; i < markerArrayList.size(); ++i) {
+//            System.out.println("FFFF SUCCESS: " + markerArrayList.get(i).getTitle());
+//        }
+//        //System.out.println("Arraylist Arraylist Arraylist Arraylist Arraylist= "  + markerArrayList.size());
+
+    }
+
 }

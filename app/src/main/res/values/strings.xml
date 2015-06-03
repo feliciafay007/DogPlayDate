@@ -61,6 +61,7 @@
     <string name="title_activity_add_friend">AddFriend</string>
     <string name="title_activity_add_friends">AddFriends</string>
     <string name="title_activity_find_freinds">FindFreinds</string>
+    <string name="title_activity_friends_list">FriendsList</string>
 
 
 </resources>

@@ -8,7 +8,7 @@
     android:paddingTop="20dp"
     android:paddingBottom="20dp"
     tools:context=".MainActivity"
-    android:background="@drawable/backgournd1">
+    android:background="@drawable/background1">
 
     <TextView
         android:id="@+id/welcome"
@@ -19,6 +19,7 @@
         android:gravity="center"
         android:textSize="40dp"
         android:textStyle="bold|italic"
+        android:textColor="#0277BD"
         android:theme="@style/TextAppearance.AppCompat.Title.Inverse"/>
 
 
@@ -26,22 +27,26 @@
     <ImageButton
         android:id="@+id/btn_fb"
         android:layout_width="120dp"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:src="@drawable/fblogo"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="43dp"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="10dp" />
 
     <ImageButton
         android:id="@+id/btn_twitter"
         android:layout_width="120dp"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:src="@drawable/twitter_logo"
         android:layout_below="@+id/btn_ForgetPass"
         android:layout_toLeftOf="@+id/btn_fb"
         android:layout_alignParentBottom="true"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="10dp" />
 
     <Button
         android:id="@+id/btn_ForgetPass"
@@ -117,5 +122,4 @@
         android:ems="10"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_text_border"/>
-
 </RelativeLayout>

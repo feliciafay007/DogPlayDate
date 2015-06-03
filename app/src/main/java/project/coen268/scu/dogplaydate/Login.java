@@ -67,6 +67,9 @@ public class Login extends Activity {
         btn_twitter = (ImageButton) findViewById(R.id.btn_twitter);
 
 
+        //@Wenyi for debug
+        mUserNameEditText.setText("lydia");
+        mPasswordEditText.setText("123456");
 
         btn_LoginIn.setOnClickListener(new OnClickListener() {
 
