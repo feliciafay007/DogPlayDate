@@ -25,7 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 
-public class DogProfile extends ActionBarActivity {
+public class DogProfile3 extends ActionBarActivity {
 
     private ParseImageView dogImage;
     private EditText nameText;
@@ -96,7 +96,7 @@ public class DogProfile extends ActionBarActivity {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("DogProfile");
         query.whereEqualTo("userName", this.user);
-        query.whereEqualTo("dogNumber", 1);
+        query.whereEqualTo("dogNumber", 3);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> scoreList, ParseException e) {
                 if (scoreList.size()!=0) {
@@ -136,7 +136,7 @@ public class DogProfile extends ActionBarActivity {
 
 
                             dogProfile.put("userName", user);
-                            dogProfile.put("dogNumber", 1);
+                            dogProfile.put("dogNumber", 3);
                             dogProfile.put("dogName", name);
                             dogProfile.put("dogAge", age);
                             dogProfile.put("dogBreed", breed);
@@ -144,7 +144,7 @@ public class DogProfile extends ActionBarActivity {
 
                             dogProfile.saveInBackground();
 
-                            Toast.makeText(DogProfile.this, "Profile Uploaded",
+                            Toast.makeText(DogProfile3.this, "Profile Uploaded",
                                     Toast.LENGTH_SHORT).show();
 
                         }
@@ -153,9 +153,6 @@ public class DogProfile extends ActionBarActivity {
                 }
             }
         });
-
-
-
 
 
 
@@ -173,9 +170,9 @@ public class DogProfile extends ActionBarActivity {
         upLoadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent albumIntent = new Intent(DogProfile.this, DogAlbum.class);
+                Intent albumIntent = new Intent(DogProfile3.this, DogAlbum.class);
                 albumIntent.putExtra("userName", user);
-                albumIntent.putExtra("dogNumber", 1);
+                albumIntent.putExtra("dogNumber", 3);
                 startActivity(albumIntent);
             }
         });
@@ -183,9 +180,9 @@ public class DogProfile extends ActionBarActivity {
         albumButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent uploadIntent = new Intent(DogProfile.this, DogAlbum2.class);
+                Intent uploadIntent = new Intent(DogProfile3.this, DogAlbum2.class);
                 uploadIntent.putExtra("userName", user);
-                uploadIntent.putExtra("dogNumber", 1);
+                uploadIntent.putExtra("dogNumber", 3);
                 startActivity(uploadIntent);
             }
         });
@@ -210,7 +207,7 @@ public class DogProfile extends ActionBarActivity {
         return true;
     }
 
-
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {

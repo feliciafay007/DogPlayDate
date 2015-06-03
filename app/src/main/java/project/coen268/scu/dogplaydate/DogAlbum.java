@@ -3,14 +3,12 @@ package project.coen268.scu.dogplaydate;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,12 +17,7 @@ import com.parse.ParseFile;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by D on 2015/5/25.
@@ -36,6 +29,8 @@ public class DogAlbum extends Activity {
     private EditText positionText;
     private EditText memoText;
     private static final int CAMERA_REQUEST = 1888;
+    private String user;
+    private int num;
 
     Button button;
 
@@ -44,7 +39,7 @@ public class DogAlbum extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dog_album);
+        setContentView(R.layout.dogalbum_layout);
 
         Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
         ParseInstallation.getCurrentInstallation().saveInBackground();
@@ -54,6 +49,14 @@ public class DogAlbum extends Activity {
         dateText = (EditText)findViewById(R.id.editText4);
         positionText = (EditText)findViewById(R.id.editText5);
         memoText = (EditText)findViewById(R.id.editText6);
+
+        Intent intent = getIntent();
+        String myuser = intent.getStringExtra("userName");
+        user = myuser;
+        int mynum = intent.getIntExtra("dogNumber",0);
+        num = mynum;
+
+
 
 
         albumImage.setOnClickListener(new View.OnClickListener() {
@@ -67,15 +70,6 @@ public class DogAlbum extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-               /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-                        R.drawable.beyonce);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] image = stream.toByteArray();
-                ParseFile file = new ParseFile("androidbegin.jpg", image);
-                file.saveInBackground();*/
-
                 String date = dateText.getText().toString();
                 String position = positionText.getText().toString();
                 String memo = memoText.getText().toString();
@@ -87,6 +81,8 @@ public class DogAlbum extends Activity {
                 file.saveInBackground();
 
                 ParseObject c = new ParseObject("ImageUpload");
+                c.put("user", user);
+                c.put("dogNum", num);
                 c.put("date", date);
                 c.put("position", position);
                 c.put("memo", memo);
@@ -108,8 +104,30 @@ public class DogAlbum extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_dog_profile, menu);
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+//            case R.id.menu_forgot_password:
+//                forgotPassword();
+//                return true;
+            case R.id.menu_share:
+                share_your_app();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void share_your_app () {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Here is a nice app that we can use together";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Hi, Let's use DogPlayDate");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
 }

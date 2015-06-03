@@ -148,6 +148,7 @@
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -194,6 +195,14 @@
         <activity
             android:name=".FriendsList"
             android:label="@string/title_activity_friends_list" >
+        </activity>
+        <activity
+            android:name=".DogProfile2"
+            android:label="@string/title_activity_dog_profile2" >
+        </activity>
+        <activity
+            android:name=".DogProfile3"
+            android:label="@string/title_activity_dog_profile3" >
         </activity>
     </application>
 

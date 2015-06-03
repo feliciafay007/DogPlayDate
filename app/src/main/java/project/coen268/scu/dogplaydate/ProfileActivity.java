@@ -61,6 +61,10 @@ public class ProfileActivity extends ActionBarActivity {
     private static final String IMAGE_COLUMN = "Image";
     private static final String IMAGE_FILE_COLUMN = "ImageFile";
 
+    private ParseImageView dogImage1;
+    private ParseImageView dogImage2 ;
+    private ParseImageView dogImage3;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -96,9 +100,9 @@ public class ProfileActivity extends ActionBarActivity {
             }
         });
 
-        ParseImageView dogImage1 = (ParseImageView) findViewById(R.id.dogImg1);
-        ParseImageView dogImage2 = (ParseImageView) findViewById(R.id.dogImg2);
-        ParseImageView dogImage3 = (ParseImageView) findViewById(R.id.dogImg3);
+        dogImage1 = (ParseImageView) findViewById(R.id.dogImg1);
+        dogImage2 = (ParseImageView) findViewById(R.id.dogImg2);
+        dogImage3 = (ParseImageView) findViewById(R.id.dogImg3);
         TextView profileName = (TextView) findViewById(R.id.profileName);
         btn_upload = (Button) findViewById(R.id.uploadProfileImg);
         profileImage.setOnClickListener(chooseImageListener);
@@ -147,6 +151,103 @@ public class ProfileActivity extends ActionBarActivity {
         // @Wenyi
         // 1 get user ID
         // 2 get dog ID
+        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("DogProfile");
+        query1.whereEqualTo("userName", this.user);
+        query1.whereEqualTo("dogNumber", 1);
+        query1.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (scoreList.size()!=0) {
+                    ParseFile image = scoreList.get(0).getParseFile("dogPic");
+                    dogImage1.setParseFile(image);
+                    dogImage1.loadInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] data, ParseException e) {
+                            System.out.println("done fetching profile image");
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+
+        ParseQuery<ParseObject> query2 = ParseQuery.getQuery("DogProfile");
+        query2.whereEqualTo("userName", this.user);
+        query2.whereEqualTo("dogNumber", 2);
+        query2.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (scoreList.size()!=0) {
+                    ParseFile image = scoreList.get(0).getParseFile("dogPic");
+                    dogImage2.setParseFile(image);
+                    dogImage2.loadInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] data, ParseException e) {
+                            System.out.println("done fetching profile image");
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+
+        ParseQuery<ParseObject> query3 = ParseQuery.getQuery("DogProfile");
+        query3.whereEqualTo("userName", this.user);
+        query3.whereEqualTo("dogNumber", 3);
+        query3.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (scoreList.size()!=0) {
+                    ParseFile image = scoreList.get(0).getParseFile("dogPic");
+                    dogImage3.setParseFile(image);
+                    dogImage3.loadInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] data, ParseException e) {
+                            System.out.println("done fetching profile image");
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+
+
+
+
+
+        dogImage1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addDog = new Intent(ProfileActivity.this, DogProfile.class);
+                addDog.putExtra("userName", user);
+                startActivity(addDog);
+            }
+        });
+
+        dogImage2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addDog = new Intent(ProfileActivity.this, DogProfile2.class);
+                addDog.putExtra("userName", user);
+                startActivity(addDog);
+            }
+        });
+
+        dogImage3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addDog = new Intent(ProfileActivity.this, DogProfile3.class);
+                addDog.putExtra("userName", user);
+                startActivity(addDog);
+            }
+        });
+
+
+
+
+
+
+
         final String localName = name;
         btn_event.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -338,4 +439,72 @@ public class ProfileActivity extends ActionBarActivity {
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
+
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("DogProfile");
+        query1.whereEqualTo("userName", this.user);
+        query1.whereEqualTo("dogNumber", 1);
+        query1.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (scoreList.size()!=0) {
+                    ParseFile image = scoreList.get(0).getParseFile("dogPic");
+                    dogImage1.setParseFile(image);
+                    dogImage1.loadInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] data, ParseException e) {
+                            System.out.println("done fetching profile image");
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+
+        ParseQuery<ParseObject> query2 = ParseQuery.getQuery("DogProfile");
+        query2.whereEqualTo("userName", this.user);
+        query2.whereEqualTo("dogNumber", 2);
+        query2.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (scoreList.size()!=0) {
+                    ParseFile image = scoreList.get(0).getParseFile("dogPic");
+                    dogImage2.setParseFile(image);
+                    dogImage2.loadInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] data, ParseException e) {
+                            System.out.println("done fetching profile image");
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+
+        ParseQuery<ParseObject> query3 = ParseQuery.getQuery("DogProfile");
+        query3.whereEqualTo("userName", this.user);
+        query3.whereEqualTo("dogNumber", 3);
+        query3.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (scoreList.size()!=0) {
+                    ParseFile image = scoreList.get(0).getParseFile("dogPic");
+                    dogImage3.setParseFile(image);
+                    dogImage3.loadInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] data, ParseException e) {
+                            System.out.println("done fetching profile image");
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+
+
+    }
+
+
 }
