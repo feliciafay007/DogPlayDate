@@ -82,7 +82,8 @@ public class CreatePlayDate extends FragmentActivity implements
     private String userName;
     private String userID;
     private String dogName;
-    private String dogID;
+    private int dogIDInt;
+    private String dogIDString;
     private String place;
     private String status; // 1.created 2.received invitation 3.reject invitation 4.accepted invitation
     private String pointLat;
@@ -91,6 +92,7 @@ public class CreatePlayDate extends FragmentActivity implements
     private Random rand;
     private SimpleDateFormat format;
     private static final String TABLENAME_PLAYDATELIST  = "playDatesListsTable";
+    private static final String TABLENAME_DOGPROFILE= "DogProfile";
     private TextView textViewChosenPlace;
     private LatLng latLng;
     //private HashMap<String, Marker> markerHashMap;
@@ -110,6 +112,18 @@ public class CreatePlayDate extends FragmentActivity implements
         setContentView(R.layout.activity_create_play_date);
         Parse.initialize(this, "DgaXmRWHs3HaCC2buvdgC1ji2LPlItoxgCol7DcJ", "8a4PcTnqh14fJC5ekKmgxR7pDWgMTl27w2eKZEqK");
         ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        //get intent
+        Bundle extras = getIntent().getExtras();
+        userID = extras.getString("userID");
+        userName = userID;
+        dogIDInt = extras.getInt("dogID", 1);
+//        userID = getIntent().getStringExtra("userID");
+//        userName = userID;
+//        int dogID = getIntent().getIntExtra("dogNumber", 1);
+        dogIDString = Integer.toString(dogIDInt);
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFF VALIDATE 2-4"  + dogIDString);
+        getDogDame();
 
         //markerArrayList = new ArrayList<Marker>();
         markerKeySet = new TreeSet<String>();
@@ -143,7 +157,8 @@ public class CreatePlayDate extends FragmentActivity implements
                 place = marker.getTitle();
                 pointLat = Double.toString(latLng.latitude);
                 pointLng = Double.toString(latLng.longitude);
-                textViewChosenPlace.setText("Loc: " + place + "," + latLng.toString());
+                textViewChosenPlace.setText("Loc: " + place);
+                //textViewChosenPlace.setText("Loc: " + place + "," + latLng.toString());
                 //System.out.println("FF_MARKER_2 : " + marker.getTitle() + "," + marker.getSnippet() + marker.getPosition().toString());
 
                 //if blue color
@@ -158,6 +173,7 @@ public class CreatePlayDate extends FragmentActivity implements
             }
         });
 
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF SUCCESS 3 " + userID + ", " + dogName + ", " + dogIDString);
 
     }
 
@@ -265,21 +281,22 @@ public class CreatePlayDate extends FragmentActivity implements
     public void prepareParseSendingData(ParseObject parseObject){
 
         //userID = new Integer(rand.nextInt(100)).toString();
-        int tempUserID = rand.nextInt(100);
-        userID = Integer.toString(tempUserID);
-        userName = ((tempUserID % 2) == 0 ? "Tracey" : "Maggie Q");
-        Date startTime = newSetDateStart.getTime();
-        Date endTime = newSetDateEnd.getTime();
-        dogName = ((tempUserID % 2) == 0 ? "Jerry" : "Tom");
-        int tempDogID = rand.nextInt(100);
-        dogID = Integer.toString(tempDogID);
+//        int tempUserID = rand.nextInt(100);
+//        userID = Integer.toString(tempUserID);
+//        userName = ((tempUserID % 2) == 0 ? "Tracey" : "Maggie Q");
+//        Date startTime = newSetDateStart.getTime();
+//        Date endTime = newSetDateEnd.getTime();
+//        dogName = ((tempUserID % 2) == 0 ? "Jerry" : "Tom");
+//        int tempDogID = rand.nextInt(100);
+//        dogID = Integer.toString(tempDogID);
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF SUCCESS 4 " + userID + ", " + dogName + ", " + dogIDString);
         status = "0";
         isValid = true;
         //place =((tempDogID % 2) == 0 ? "Mission Park" : "Alumni Park");
         parseObject.put("userName", userName);
         parseObject.put("userID", userID);
         parseObject.put("dogName", dogName);
-        parseObject.put("dogID", dogID);
+        parseObject.put("dogID", dogIDString);
         parseObject.put("place", place);
         parseObject.put("startTime", newSetDateStart.getTime()); // para2: Date
         parseObject.put("endTime", newSetDateEnd.getTime()); // para2: Date
@@ -302,10 +319,11 @@ public class CreatePlayDate extends FragmentActivity implements
         }
 
         ParseObject playDatesListsTable = new ParseObject(TABLENAME_PLAYDATELIST);
-        prepareParseSendingData(playDatesListsTable );
+        prepareParseSendingData(playDatesListsTable);
         playDatesListsTable.saveInBackground();
         Intent intentViewDatesList = new Intent (CreatePlayDate.this, ViewDatesList.class);
-        Toast.makeText(this, newSetDateStart.toString() + "\n" + newSetDateEnd.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, newSetDateStart.toString() + "\n" + newSetDateEnd.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Event at " + place + " sucessfully created!", Toast.LENGTH_SHORT).show();
         startActivity(intentViewDatesList);//要把startActivity写在onClickCreate的最后一行，否则系统会时不时crash
 //@Felicia 放在这里来调试，是为了保证AsyncTask线程的返回结果全部获取了之后，再显示。
 //        for (int i = 0; i < markerArrayList.size(); ++i) {
@@ -329,9 +347,9 @@ public class CreatePlayDate extends FragmentActivity implements
         format = new SimpleDateFormat("MMM dd, yyyy");
         editTextStartDate.setText("  " +format.format(newSetDateStart.getTime()));
         format = new SimpleDateFormat("hh:mm a");
-        editTextStartTime.setText("  " +format.format(newSetDateStart.getTime()));
+        editTextStartTime.setText("  " + format.format(newSetDateStart.getTime()));
         newSetDateEnd.add(Calendar.HOUR, 1);
-        editTextEndTime.setText("  " +format.format(newSetDateEnd.getTime()));
+        editTextEndTime.setText("  " + format.format(newSetDateEnd.getTime()));
         format = new SimpleDateFormat("MMM dd, yyyy");
         editTextEndDate.setText("  " +format.format(newSetDateEnd.getTime()));
         prepareDatePickerDialog();
@@ -457,6 +475,27 @@ public class CreatePlayDate extends FragmentActivity implements
 //        }
 //        //System.out.println("Arraylist Arraylist Arraylist Arraylist Arraylist= "  + markerArrayList.size());
 
+    }
+
+    void getDogDame() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(TABLENAME_DOGPROFILE);
+        query.whereEqualTo("userName", userName);
+        query.whereEqualTo("dogNumber",dogIDInt);
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFF VALIDATE 2-1" + userName);
+        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFF VALIDATE 2-2" + dogIDInt);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> recordList, ParseException e) {
+                if (e == null) {
+                    for (ParseObject myObject : recordList) {
+                        dogName= myObject.getString("dogName");
+                        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFF VALIDATE 2-3"  + dogName);
+                    }
+                } else {
+                    Log.d("FFFFFFF6", "Error: " + e.getMessage());
+                    return;
+                }
+            }
+        });
     }
 
 }

@@ -176,9 +176,7 @@ public class ProfileActivity extends ActionBarActivity {
 
 
 
-        // @Wenyi
-        // 1 get user ID
-        // 2 get dog ID
+
         ParseQuery<ParseObject> query1 = ParseQuery.getQuery("DogProfile");
         query1.whereEqualTo("userName", this.user);
         query1.whereEqualTo("dogNumber", 1);
@@ -190,7 +188,7 @@ public class ProfileActivity extends ActionBarActivity {
                     dogImage1.loadInBackground(new GetDataCallback() {
                         @Override
                         public void done(byte[] data, ParseException e) {
-                            System.out.println("done fetching profile image");
+                            System.out.println("done fetching profile image1");
                         }
                     });
                 } else {
@@ -210,7 +208,7 @@ public class ProfileActivity extends ActionBarActivity {
                     dogImage2.loadInBackground(new GetDataCallback() {
                         @Override
                         public void done(byte[] data, ParseException e) {
-                            System.out.println("done fetching profile image");
+                            System.out.println("done fetching profile image2");
                         }
                     });
                 } else {
@@ -238,9 +236,6 @@ public class ProfileActivity extends ActionBarActivity {
                 }
             }
         });
-
-
-
 
 
         dogImage1.setOnClickListener(new View.OnClickListener() {
@@ -342,16 +337,18 @@ public class ProfileActivity extends ActionBarActivity {
         }
 
 
-
-
-        final String localName = name;
+        // @Wenyi
+        // 1 get user ID
+        // 2 get dog ID
+        final String localUserName = name;
+        final int localDogNumber = 1; // every person has dog, ranging from ID = 1 to , ID = 3
         btn_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addEvent = new Intent(ProfileActivity.this, CreatePlayDate.class);
-                addEvent.putExtra("userID", localName);
                 //validate if there is any dog, if no ,show dialog, elese, get dog Id;
-                //addEvent.putExtra("dogID", );
+                addEvent.putExtra("userID", localUserName);
+                addEvent.putExtra("dogID", (int)2);
                 startActivity(addEvent);
             }
         });

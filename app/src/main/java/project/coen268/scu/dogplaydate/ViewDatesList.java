@@ -109,7 +109,7 @@ public class ViewDatesList extends Activity{
                         //System.out.println("list size " + currentDatesRecord.size());
                         if (oneRecord.getEndTime().before(compareDateBaseline.getTime())) {
                             historyDatesRecord.add(oneRecord);
-                            historySparseArray .put(historyCounter, oneRecord);
+                            historySparseArray.put(historyCounter, oneRecord);
                             ++historyCounter;
                         } else {
                             currentDatesRecord.add(oneRecord);
@@ -162,9 +162,41 @@ public class ViewDatesList extends Activity{
         }
         AlertDialog.Builder deleteDialogBuilder = new AlertDialog.Builder(ViewDatesList.this);
         deleteDialogBuilder.
-                setMessage("Do you really want to delete this?\n" + recordList.get((int) listViewItemId).toString()).
+                //setMessage("Do you really want to delete this event?\n" + recordList.get((int) listViewItemId).toString()).
+                setMessage("Do you really want to delete this event?").
                 setTitle("Note");
 
+        deleteDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            //todo: currentSparseArray, hisotrySparseArray
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "Successfully deleted one row.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "this is to be deleted: \n" + recordList.get((int) listViewItemId).toString(), Toast.LENGTH_SHORT).show();
+                ParseQuery<ParseObject> query = ParseQuery.getQuery(TABLENAME_PLAYDATELIST);
+                query.whereEqualTo("objectId", sparseArray.get((int) listViewItemId).getObjectID());
+                //System.out.println("objectId" + currentSparseArray.get((int) listViewItemId).getObjectID());
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    public void done(List<ParseObject> objectList, ParseException e) {
+                        if (e == null) {
+                            for (ParseObject myObject : objectList) {
+                                myObject.deleteInBackground(new DeleteCallback() {
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            loadListSource();
+                                        } else {
+                                            Log.d("FF", "Delete Error1: " + e.getMessage());
+                                        }
+                                    }
+                                });
+                            }
+                        } else {
+                            Log.d("FF", "Delete Error2: " + e.getMessage());
+                            return;
+                        }
+                    }
+                });
+            }
+        });
 
         deleteDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -174,6 +206,7 @@ public class ViewDatesList extends Activity{
                 }
 
         );
+
         AlertDialog deleteDialog = deleteDialogBuilder.create();
         deleteDialog.show();
     }
