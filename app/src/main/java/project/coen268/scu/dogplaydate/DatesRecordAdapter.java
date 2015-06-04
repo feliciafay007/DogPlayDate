@@ -44,22 +44,26 @@ public class DatesRecordAdapter extends ArrayAdapter<DatesRecordEntity>{
         ImageButton parkButton = (ImageButton) row.findViewById(R.id.parkImageButton);
         TextView participantTextView = (TextView) row.findViewById(R.id.participantTextView);
         ImageButton invitationStatusImageButton = (ImageButton) row.findViewById(R.id.invitationStatusImageButton);
+        TextView parkNameTextView = (TextView) row.findViewById(R.id.parkNameTextView);
 
         startTimeTextView.setText(simpleDateFormat .format(listSource.get(position).getStartTime()));
         //startTimeTextView.setText(listSource.get(position).getStartTime().toString().substring(0,5));
         endTimeTextView.setText(simpleDateFormat .format(listSource.get(position).getEndTime()));
         long timeDuration = listSource.get(position).getEndTime().getTime() - listSource.get(position).getStartTime().getTime();
         timeDuration = timeDuration/TIME_INTERVAL;
-        timeDurationTextView.setText(Long.toString(timeDuration));
-        participantTextView.setText("Nobody");
+        timeDurationTextView.setText("about " + Long.toString(timeDuration) + " hours");
+        //participantTextView.setText("Nobody");
+        participantTextView.setText(listSource.get(position).getUserID());
         //below: logical test, no busines sense
 //        startTimeTextView.setText("111");
 //        endTimeTextView.setText("222");
 //        timeDurationTextView.setText("333");
         dogButton.setImageResource(R.drawable.dog_icon);
         dogNameTextView.setText(listSource.get(position).getDogName());
-        parkButton.setImageResource(R.drawable.common_signin_btn_icon_light);
-        invitationStatusImageButton.setImageResource(R.drawable.abc_btn_radio_material);
+        //parkButton.setImageResource(R.drawable.common_signin_btn_icon_light);
+        parkButton.setImageResource(R.drawable.park1);
+        invitationStatusImageButton.setImageResource(R.drawable.share2);
+        parkNameTextView.setText(listSource.get(position).getPlace());
         dogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

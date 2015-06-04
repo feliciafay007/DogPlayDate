@@ -17,25 +17,28 @@
             android:id="@+id/startTimeTextView"
             android:layout_gravity="center_vertical"
             android:text="May,31,2015\n01:00 pm"
-            android:minHeight="10dp" />
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:id="@+id/endTimeTextView"
-            android:layout_gravity="center_vertical"
-            android:text="May,31,2015\n02:00 pm"
+            android:textColor="#424242"
             android:minHeight="10dp" />
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:textSize="12dp"
             android:id="@+id/timeDurationTextView"
+            android:textColor="#424242"
             android:layout_gravity="center_vertical" />
-
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:id="@+id/endTimeTextView"
+            android:layout_gravity="center_vertical"
+            android:textColor="#424242"
+            android:text="May,31,2015\n02:00 pm"
+            android:minHeight="10dp" />
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="40dp" android:layout_height="match_parent"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <ImageButton
             android:layout_width="35dp"
@@ -50,7 +53,7 @@
         <TextView
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:id="@+id/dogNameTextView"
             android:layout_gravity="center"
             android:text="1"
@@ -58,26 +61,47 @@
             android:layout_marginTop="1dp"
             android:layout_marginRight="1dp"
             android:layout_marginBottom="1dp"
+            android:textColor="#424242"
             android:gravity="center_vertical|center_horizontal" />
         </LinearLayout>
-    <ImageButton
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginTop="1dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:id="@+id/parkImageButton"
-        android:contentDescription="park image" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:id="@+id/parkImageButton"
+            android:contentDescription="park image" />
+        <TextView
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
+            android:id="@+id/parkNameTextView"
+            android:layout_gravity="center"
+            android:text="1"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:textColor="#424242"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>>
+
     <TextView
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="16sp"
         android:id="@+id/participantTextView"
         android:text="Tom, Jerry"
         android:layout_gravity="center"
+        android:textColor="#424242"
         android:gravity="center_vertical|center_horizontal" />
     <ImageButton
         android:layout_width="35dp"

@@ -324,7 +324,10 @@ public class CreatePlayDate extends FragmentActivity implements
         Intent intentViewDatesList = new Intent (CreatePlayDate.this, ViewDatesList.class);
         //Toast.makeText(this, newSetDateStart.toString() + "\n" + newSetDateEnd.toString(), Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "Event at " + place + " sucessfully created!", Toast.LENGTH_SHORT).show();
-        startActivity(intentViewDatesList);//要把startActivity写在onClickCreate的最后一行，否则系统会时不时crash
+
+        intentViewDatesList.putExtra("userID", userID);
+        startActivity(intentViewDatesList);
+        //要把startActivity写在onClickCreate的最后一行，否则系统会时不时crash
 //@Felicia 放在这里来调试，是为了保证AsyncTask线程的返回结果全部获取了之后，再显示。
 //        for (int i = 0; i < markerArrayList.size(); ++i) {
 //            System.out.println("FFFF SUCCESS: " + markerArrayList.get(i).getTitle());
@@ -446,7 +449,8 @@ public class CreatePlayDate extends FragmentActivity implements
         googlePlacesUrl.append("&types=" + type);
         googlePlacesUrl.append("&sensor=true");
         googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
-        Toast.makeText(getApplicationContext(), googlePlacesUrl.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), googlePlacesUrl.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "return search nearby parks result from Google map", Toast.LENGTH_SHORT).show();
         //System.out.println(googlePlacesUrl.toString());
 
 //        Object[] toPass = new Object[2];

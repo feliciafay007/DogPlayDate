@@ -1,6 +1,7 @@
 package project.coen268.scu.dogplaydate;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.DatePicker;
 import android.widget.ListView;
 
 import com.parse.Parse;
@@ -16,7 +18,9 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -49,6 +53,8 @@ public class DogAlbum2 extends Activity {
 
 // Execute RemoteDataTask AsyncTask
         new RemoteDataTask().execute();
+
+
     }
 
     // RemoteDataTask AsyncTask

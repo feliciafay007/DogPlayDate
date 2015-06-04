@@ -62,6 +62,12 @@ public class ViewDatesList extends Activity{
         compareDateBaseline = Calendar.getInstance();
         currentListsView = (ListView) findViewById(R.id.currentDatesListView);
         historyListsView = (ListView) findViewById(R.id.pastDatesListView);
+
+        //intentViewDatesList.putExtra("userID", userID);
+        Bundle extra = getIntent().getExtras();
+        userID = extra.getString("userID");
+        userName = userID;
+
 //        inputSimpleFormat = new SimpleDateFormat("MMM dd, yyyy, HH:mm");
 //        inputSimpleFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 //        localSimpleFormat= new SimpleDateFormat("MMM dd, yyyy, hh:mm a");
@@ -84,7 +90,7 @@ public class ViewDatesList extends Activity{
         historySparseArray.clear();
         ParseQuery<ParseObject> query = ParseQuery.getQuery(TABLENAME_PLAYDATELIST);
         //todo: uncommetn this  line
-        //query.whereEqualTo("userID", userID);
+        query.whereEqualTo("userID", userID);
         //query.setLimit(30); // default is 100.
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> recordList, ParseException e) {

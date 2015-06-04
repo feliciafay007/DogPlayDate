@@ -18,6 +18,8 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by D on 2015/5/25.
@@ -31,7 +33,8 @@ public class DogAlbum extends Activity {
     private static final int CAMERA_REQUEST = 1888;
     private String user;
     private int num;
-
+    private SimpleDateFormat format;
+    private Calendar newCalendar;
     Button button;
 
     private Bitmap photo;
@@ -56,8 +59,11 @@ public class DogAlbum extends Activity {
         int mynum = intent.getIntExtra("dogNumber",0);
         num = mynum;
 
-
-
+        //
+        newCalendar = Calendar.getInstance(); // use today's date as default
+        format = new SimpleDateFormat("MMM dd, yyyy");
+        dateText.setText(format.format(newCalendar.getTime()));
+        //
 
         albumImage.setOnClickListener(new View.OnClickListener() {
             @Override
