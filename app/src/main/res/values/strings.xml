@@ -45,8 +45,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_invalid_confirm_password">Passwords do not match</string>
     <string name="error_field_required">This field is required</string>
-    <string name="title_activity_profile">ProfileActivity</string>
-
+    <string name="title_activity_profile">Navigation</string>
 
     <!-- from Dai-->
     <string name="ranklabel">"Date : "</string>
